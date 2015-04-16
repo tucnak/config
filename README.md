@@ -1,2 +1,1 @@
-# config
-These are configuration files of mine. Straight away from my machine!
+I am currently running Mid-2012 MacBook Air with Yosemite here. All these configuration files are (relatively) real-time configurations of mine.
