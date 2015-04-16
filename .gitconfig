@@ -1,0 +1,42 @@
+[color]
+    diff   = true
+    grep   = true
+    status = true
+    ui     = true
+
+[log]
+    decorate = full
+
+[push]
+    default = simple
+
+[alias]
+    ci  = commit
+    cia = commit --amend
+    br  = branch
+    co  = checkout
+    st  = status --short
+    au  = add -u
+    cb  = checkout -b
+    rh  = reset --hard
+    dc  = diff --cached
+
+[core]
+    pager  = less -+$LESS -FRX
+    editor = vim
+
+[user]
+    name  = Ilya Kowalewski
+    email = illya.kovalevskyy@gmail.com
+
+[credential]
+    helper = cache --timeout=3600
+
+[url "http://anongit.kde.org/"]
+    insteadOf = kde:
+[url "git@git.kde.org:"]
+    pushInsteadOf = kde:
+
+[url "git@github.com:"]
+    insteadOf = github:
+    pushInsteadOf = github:
