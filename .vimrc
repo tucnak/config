@@ -17,6 +17,6 @@ set smarttab
 set ruler
 set undolevels=1000
 set backspace=indent,eol,start
-set pastetoggle=<F10>
+set pastetoggle=<F9>
 
 syntax on

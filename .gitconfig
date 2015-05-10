@@ -21,6 +21,8 @@
     rh  = reset --hard
     dc  = diff --cached
 
+    sync = "!git pull upstream master && git push origin master"
+
 [core]
     pager  = less -+$LESS -FRX
     editor = vim

@@ -8,6 +8,10 @@ export NODE_PATH="/usr/local/lib/node_modules"
 # Qt 5.4
 export PATH="$HOME/Qt/5.4/clang_64/bin:$PATH"
 
+# Clang + LD
+export CPLUS_INCLUDE_PATH=/usr/local/include/
+export LIBRARY_PATH="/usr/local/lib"
+
 # CCache + Clang
 export CC="ccache clang"
 export CXX="ccache clang++"
