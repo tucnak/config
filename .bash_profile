@@ -13,9 +13,9 @@ export CPLUS_INCLUDE_PATH=/usr/local/include/
 export LIBRARY_PATH="/usr/local/lib"
 
 # CCache + Clang
-export CC="ccache clang"
-export CXX="ccache clang++"
-export CCACHE_CPP2=YES
+#export CC="ccache clang"
+#export CXX="ccache clang++"
+#export CCACHE_CPP2=YES
 
 # Locale fix for SSH
 export LC_CTYPE=en_US.UTF-8
@@ -29,6 +29,7 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # ===============
 export PATH="/usr/local/Cellar/ccache/3.2.1/libexec:$PATH"
 
-# Go!
+# Go
+export GOROOT="$HOME/Development/gopher/git/"
 export GOPATH="$HOME/Development/gopher"
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$GOROOT/bin:$PATH:$GOPATH/bin"

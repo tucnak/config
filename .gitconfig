@@ -29,7 +29,7 @@
 
 [user]
     name  = Ilya Kowalewski
-    email = illya.kovalevskyy@gmail.com
+    email = ilya.kowalewski@gmail.com
 
 [credential]
     helper = cache --timeout=3600
@@ -42,3 +42,7 @@
 [url "git@github.com:"]
     insteadOf = github:
     pushInsteadOf = github:
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
