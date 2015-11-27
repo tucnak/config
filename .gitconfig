@@ -5,7 +5,7 @@
     ui     = true
 
 [log]
-	decorate = true
+    decorate = true
 
 [push]
     default = simple
@@ -33,7 +33,7 @@
 [user]
     name  = Ian Byrd
     email = ian@byrd.im
-	signingkey = A3B8055F
+    signingkey = A3B8055F
 
 [credential]
     helper = cache --timeout=3600
@@ -47,6 +47,6 @@
     insteadOf = github:
     pushInsteadOf = github:
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
