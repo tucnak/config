@@ -5,13 +5,13 @@
     ui     = true
 
 [log]
-    decorate = full
+	decorate = true
 
 [push]
     default = simple
 
 [alias]
-    ci  = commit
+    ci  = commit -S
     cia = commit --amend
     br  = branch
     co  = checkout
@@ -21,6 +21,9 @@
     rh  = reset --hard
     dc  = diff --cached
 
+    slog = log --show-signature
+    tree = log --graph --pretty=oneline --abbrev-commit
+
     sync = "!git pull upstream master && git push origin master"
 
 [core]
@@ -28,8 +31,9 @@
     editor = vim
 
 [user]
-    name  = Ilya Kowalewski
-    email = ilya.kowalewski@gmail.com
+    name  = Ian Byrd
+    email = ian@byrd.im
+	signingkey = A3B8055F
 
 [credential]
     helper = cache --timeout=3600
