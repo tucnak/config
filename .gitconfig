@@ -19,10 +19,13 @@
     au  = add -u
     cb  = checkout -b
     rh  = reset --hard
+    pr  = pull --rebase
     dc  = diff --cached
 
     slog = log --show-signature
     tree = log --graph --pretty=oneline --abbrev-commit
+
+    pour = merge --no-ff -S
 
     sync = "!git pull upstream master && git push origin master"
 
