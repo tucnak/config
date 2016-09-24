@@ -1,3 +1,4 @@
+ansible
 arp-scan
 arpack
 at-spi2-atk
@@ -77,10 +78,12 @@ libtool
 libtoxcore
 libvo-aacenc
 libvpx
+libyaml
 links
 little-cms2
 lua
 macvim
+mad
 mercurial
 mongodb
 mpfr
@@ -98,6 +101,7 @@ opus
 p7zip
 pango
 pcre
+pcre2
 pixman
 pkg-config
 plan9port
@@ -124,6 +128,7 @@ screenfetch
 sip
 sl
 snappy
+sox
 sqlite
 sshfs
 suite-sparse
@@ -139,6 +144,7 @@ vim
 watch
 webp
 wget
+wrk
 x264
 xvid
 xz

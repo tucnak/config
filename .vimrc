@@ -7,8 +7,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'fatih/vim-go'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'majutsushi/tagbar'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'majutsushi/tagbar'
 Plugin 'SirVer/ultisnips'
 Plugin 'garyburd/go-explorer'
 call vundle#end()                   " required
@@ -36,3 +36,6 @@ set backspace=indent,eol,start
 set pastetoggle=<F9>
 
 syntax on
+
+" remove trailing whitespaces on save
+autocmd BufWritePre * :%s/\s\+$//e
