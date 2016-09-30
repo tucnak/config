@@ -21,10 +21,11 @@ set autoindent
 set smartindent
 set smarttab
 set ruler
+set fileencoding=utf8
 set undolevels=1000
 set backspace=indent,eol,start
-set pastetoggle=<F9>
-set clipboard^=unnamed
+set clipboard="*
+set mouse-=a
 set completeopt-=preview
 
 call vundle#begin()
@@ -38,8 +39,44 @@ call vundle#end()
 autocmd BufWritePre * :%s/\s\+$//e
 
 " emmet expand with :Expand
-command Expand call emmet#expandAbbr(3,"")
+command! Expand call emmet#expandAbbr(3,"")
+
+" clear highlighting on <ESC> in normal mode
+nnoremap <CR> :noh<CR><CR>
+
+" handy redo
+nnoremap U :redo<CR>
 
 " tab navigation
-nnoremap <S-Left> :tabprevious<CR>
-nnoremap <S-Right> :tabnext<CR>
+nnoremap <S-Tab> :tabprevious<CR>
+nnoremap <Tab> :tabnext<CR>
+
+" line swaps
+function! SwapUp()
+   if line(".") == 1
+       return
+   endif
+   call feedkeys("ddkP")
+endfunction
+
+function! SwapDown()
+   if line(".") == line("$")
+       return
+   endif
+   call feedkeys("ddp")
+endfunction
+
+nnoremap <S-Up> :call SwapUp()<CR>
+nnoremap <S-Down> :call SwapDown()<CR>
+
+function! Paste()
+    :set paste
+    normal! "*P`]
+    :set nopaste
+endfunction
+
+" clever copy pasting
+nnoremap <C-v> :call Paste()<CR>
+inoremap <C-v> <ESC>:call Paste()<CR>i
+vnoremap <C-c> "*y
+vnoremap <C-x> "*d
