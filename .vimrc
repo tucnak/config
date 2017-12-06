@@ -1,14 +1,16 @@
-filetype off
 filetype plugin indent on
-syntax on
+syntax enable
 
-set rtp+=~/.vim/bundle/Vundle.vim
+set nobackup
+set nowritebackup
+set noswapfile
+
 set nocompatible
 set number
+set norelativenumber
 set showbreak=+++
-set textwidth=100
+set textwidth=80
 set showmatch
-set visualbell
 set hlsearch
 set smartcase
 set ignorecase
@@ -21,62 +23,51 @@ set autoindent
 set smartindent
 set smarttab
 set ruler
+set nowrap
 set fileencoding=utf8
-set undolevels=1000
 set backspace=indent,eol,start
+set undolevels=1000
 set clipboard="*
 set mouse-=a
 set completeopt-=preview
 
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'fatih/vim-go'
-Plugin 'SirVer/ultisnips'
-Plugin 'mattn/emmet-vim'
-call vundle#end()
+call plug#begin()
+Plug 'tpope/vim-sensible'
+Plug 'garbas/vim-snipmate'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+Plug 'itchyny/lightline.vim'
+Plug 'fatih/vim-go'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-commentary'
+Plug 'mileszs/ack.vim'
+call plug#end()
 
-" remove trailing whitespaces on save
+source ~/.vim/functions.vim
+noremap <C-c> "*y
+noremap <C-A> :%y*<CR>
+source ~/.vim/paste.vim
+
+colorscheme elflord
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
+let g:go_fmt_command = "goimports"
+
+autocmd FileType markdown setlocal wrap
+autocmd FileType html setlocal wrap
+autocmd FileType go hi Error NONE
 autocmd BufWritePre * :%s/\s\+$//e
 
-" emmet expand with :Expand
-command! Expand call emmet#expandAbbr(3,"")
+"noremap <Up> <Nop>
+"noremap <Down> <Nop>
+"noremap <Left> <Nop>
+"noremap <Right> <Nop>
 
-" clear highlighting on <ESC> in normal mode
-nnoremap <CR> :noh<CR><CR>
-
-" handy redo
-nnoremap U :redo<CR>
-
-" tab navigation
+noremap U :redo<CR>
+nnoremap <CR> :noh<CR>
 nnoremap <S-Tab> :tabprevious<CR>
 nnoremap <Tab> :tabnext<CR>
-
-" line swaps
-function! SwapUp()
-   if line(".") == 1
-       return
-   endif
-   call feedkeys("ddkP")
-endfunction
-
-function! SwapDown()
-   if line(".") == line("$")
-       return
-   endif
-   call feedkeys("ddp")
-endfunction
-
-nnoremap <S-Up> :call SwapUp()<CR>
 nnoremap <S-Down> :call SwapDown()<CR>
-
-function! Paste()
-    :set paste
-    normal! "*P`]
-    :set nopaste
-endfunction
-
-" clever copy pasting
-nnoremap <C-v> :call Paste()<CR>
-inoremap <C-v> <ESC>:call Paste()<CR>i
-vnoremap <C-c> "*y
-vnoremap <C-x> "*d
+nnoremap <S-Up> :call SwapUp()<CR>
+inoremap <C-E> <ESC>:call emmet#expandAbbr(3,"")<CR>i

@@ -12,7 +12,7 @@
 
 [alias]
     ci  = commit -S
-    cia = commit --amend
+    cia = commit -S --amend
     br  = branch
     co  = checkout
     st  = status --short
@@ -26,6 +26,7 @@
     tree = log --graph --pretty=oneline --abbrev-commit
 
     pour = merge --no-ff -S
+    sq   = merge --squash -S
 
     sync = "!git pull upstream master && git push origin master"
 
@@ -39,16 +40,23 @@
     signingkey = A3B8055F
 
 [credential]
-    helper = cache --timeout=3600
+	helper = osxkeychain
 
 [url "http://anongit.kde.org/"]
     insteadOf = kde:
 [url "git@git.kde.org:"]
     pushInsteadOf = kde:
 
+[url "https://github.com/"]
+    insteadOf = gh:
 [url "git@github.com:"]
+    pushInsteadOf = gh:
+
+[url "https://github.com/"]
     insteadOf = github:
+[url "git@github.com:"]
     pushInsteadOf = github:
+
 [filter "lfs"]
     clean = git-lfs clean %f
     smudge = git-lfs smudge %f
