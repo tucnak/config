@@ -1,6 +1,7 @@
 filetype plugin indent on
 syntax enable
 
+set wrap
 set nobackup
 set nowritebackup
 set noswapfile
@@ -9,7 +10,8 @@ set nocompatible
 set number
 set norelativenumber
 set showbreak=+++
-set textwidth=80
+set textwidth=0
+set wrapmargin=0
 set showmatch
 set hlsearch
 set smartcase
@@ -23,7 +25,6 @@ set autoindent
 set smartindent
 set smarttab
 set ruler
-set nowrap
 set fileencoding=utf8
 set backspace=indent,eol,start
 set undolevels=1000
@@ -52,7 +53,8 @@ colorscheme elflord
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }
-let g:go_fmt_command = "goimports"
+"let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "gofmt"
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType html setlocal wrap

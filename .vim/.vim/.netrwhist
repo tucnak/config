@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/opt/local'
-let g:netrw_dirhist_2='/opt/local/include'
-let g:netrw_dirhist_3='/opt/local'
-let g:netrw_dirhist_4='/opt/local/lib'
-let g:netrw_dirhist_5='/Users/tucnak/Downloads/PA2'

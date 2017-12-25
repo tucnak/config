@@ -11,8 +11,10 @@
     default = simple
 
 [alias]
-    ci  = commit -S
-    cia = commit -S --amend
+    ci  = commit
+    cia = commit --amend
+    sci  = commit -S
+    scia = commit --amend -S
     br  = branch
     co  = checkout
     st  = status --short
