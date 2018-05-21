@@ -1,3 +1,5 @@
+command Goi GoImports
+
 filetype plugin indent on
 syntax enable
 
@@ -35,8 +37,8 @@ set completeopt-=preview
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'garbas/vim-snipmate'
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
 Plug 'mattn/emmet-vim'

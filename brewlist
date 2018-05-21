@@ -47,6 +47,7 @@ gd
 gdb
 gdbm
 gdk-pixbuf
+geos
 gettext
 ghostscript
 git
@@ -113,11 +114,11 @@ little-cms2
 llvm
 lua
 luajit
+lzo
 macvim
 mad
 make
 mercurial
-minetest
 mongodb
 mpfr
 ncurses
@@ -125,13 +126,17 @@ nettle
 ninja
 nmap
 node
+node@6
+node@8
 numpy
+nvm
 octave
 openal-soft
 opencv
 openexr
 openssh
 openssl
+openvpn
 opus
 p11-kit
 p7zip
@@ -170,7 +175,6 @@ rust
 screenfetch
 shared-mime-info
 sip
-sl
 snappy
 sox
 sqlite
