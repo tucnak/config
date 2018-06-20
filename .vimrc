@@ -44,6 +44,8 @@ Plug 'fatih/vim-go'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 call plug#end()
 
 source ~/.vim/functions.vim

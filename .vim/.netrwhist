@@ -1,9 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/tucnak/pro-website/src/client/app/modules/shared/components/img-resized'
-let g:netrw_dirhist_2='/Users/tucnak/pro-website/node_modules/angular-2-dropdown-multiselect'
-let g:netrw_dirhist_3='/Users/tucnak/pro-website/node_modules/angular-2-dropdown-multiselect/bundles'
-let g:netrw_dirhist_4='/Users/tucnak/pro-website/src/app'
-let g:netrw_dirhist_5='/Users/tucnak/pro-website/src/app/+media-modal'
-let g:netrw_dirhist_6='/Users/tucnak/pro-website/src/app/modules/manage-content/manage-content'
-let g:netrw_dirhist_7='/Users/tucnak/pro-website/node_modules/tiff.js'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/tucnak/D/veritas/home/src/landing'
+let g:netrw_dirhist_2='/Users/tucnak/D/gopher/src/github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/certs'
+let g:netrw_dirhist_3='/Users/tucnak/mrss-parser/app/media-import'

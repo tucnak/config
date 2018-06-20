@@ -38,7 +38,7 @@
 
 [user]
     name  = Ian Byrd
-    email = ian@byrd.im
+	email = ian@byrd.im
     signingkey = A3B8055F
 
 [credential]
@@ -49,12 +49,7 @@
 [url "git@git.kde.org:"]
     pushInsteadOf = kde:
 
-[url "https://github.com/"]
-    insteadOf = gh:
 [url "git@github.com:"]
-    pushInsteadOf = gh:
-
-[url "https://github.com/"]
     insteadOf = github:
 [url "git@github.com:"]
     pushInsteadOf = github:

@@ -1,35 +1,30 @@
 # Prompt
-PS1="[\u@$(scutil --get ComputerName):\W]\\$ " 
+PS1="\u@$(scutil --get ComputerName):\W\\$ "
 
-# MacPorts
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-# Node.js
-export NODE_PATH="/usr/local/lib/node_modules"
-# Qt 5.4
-export PATH="$HOME/Qt/5.4/clang_64/bin:$PATH"
+# Aliases
+alias outpost="lsof -nP -i4TCP:\$PORT | grep LISTEN"
+alias termbin="nc termbin.com 9999"
+alias stat="stat -x"
+alias ls="ls -G"
+alias ll="ls -l"
 
-# Clang + LD
+# Clang
 export CPLUS_INCLUDE_PATH=/usr/local/include/
 export LIBRARY_PATH="/usr/local/lib"
-
-# CCache + Clang
-#export CC="ccache clang"
-#export CXX="ccache clang++"
-#export CCACHE_CPP2=YES
 
 # Locale fix for SSH
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# A bit of coloring da shell!
+# Colours
 export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagacad
-
-# Must be final!
-# ===============
-export PATH="/usr/local/Cellar/ccache/3.2.1/libexec:$PATH"
+export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # Go
-export GOROOT="$HOME/Development/gopher/git/"
-export GOPATH="$HOME/Development/gopher"
-export PATH="$GOROOT/bin:$PATH:$GOPATH/bin"
+export OROOT="$HOME/Dev/go/git/"
+export GOPATH="$HOME/Dev/go"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+
+
+export GREP_OPTIONS='--color=auto'
+export GPG_TTY=(tty)
