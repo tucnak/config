@@ -21,10 +21,17 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # Go
-export OROOT="$HOME/Dev/go/git/"
-export GOPATH="$HOME/Dev/go"
-export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+export GOPATH="$HOME/Devel/go"
+export PATH="$PATH:$GOPATH/bin"
 
 
 export GREP_OPTIONS='--color=auto'
 export GPG_TTY=(tty)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/badt/Devel/google-cloud-sdk/path.bash.inc' ]; then source '/Users/badt/Devel/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/badt/Devel/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/badt/Devel/google-cloud-sdk/completion.bash.inc'; fi
+
+export PATH="$PATH:/Users/badt/Devel/google-cloud-sdk/bin"
