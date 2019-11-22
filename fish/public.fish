@@ -17,6 +17,11 @@ set -xg LC_ALL en_US.UTF-8
 set -xg CLICOLOR 1
 set -xg LSCOLORS ExFxCxDxBxegedabagacad
 
+function terminal # user@host
+	set details (echo $argv)
+	ssh -C $details -t "tmux -CC at || tmux -CC"
+end
+
 function tunnel # user@host@port
 	set details (echo $argv[1] | string split "@" | string split ":")
 
