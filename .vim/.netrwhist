@@ -1,5 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/tucnak/D/veritas/home/src/landing'
-let g:netrw_dirhist_2='/Users/tucnak/D/gopher/src/github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/certs'
-let g:netrw_dirhist_3='/Users/tucnak/mrss-parser/app/media-import'
+let g:netrw_dirhistcnt =1
+let g:netrw_dirhist_1='/Users/badt/.config/fish/completions'

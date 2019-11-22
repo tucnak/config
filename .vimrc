@@ -20,9 +20,6 @@ set smartcase
 set ignorecase
 set incsearch
 set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
 set autoindent
 set smartindent
 set smarttab
@@ -30,9 +27,17 @@ set ruler
 set fileencoding=utf8
 set backspace=indent,eol,start
 set undolevels=1000
-set clipboard="*
+set clipboard=unnamed
 set mouse-=a
 set completeopt-=preview
+
+"set expandtab
+"set copyindent
+"set preserveindent
+"set softtabstop=4
+set noexpandtab
+set tabstop=8
+set shiftwidth=8
 
 call plug#begin()
 Plug 'tpope/vim-sensible'
@@ -46,11 +51,13 @@ Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'manu-mannattil/vim-longlines'
+Plug 'rhysd/vim-grammarous'
+Plug 'dag/vim-fish'
 call plug#end()
 
 source ~/.vim/functions.vim
-noremap <C-c> "*y
-noremap <C-A> :%y*<CR>
 source ~/.vim/paste.vim
 
 colorscheme elflord
@@ -62,6 +69,7 @@ let g:go_fmt_command = "gofmt"
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType html setlocal wrap
+autocmd FileType mediawiki,tex,markdown,html LongLinesOn
 autocmd FileType go hi Error NONE
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -71,6 +79,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 "noremap <Right> <Nop>
 
 noremap U :redo<CR>
+noremap <C-c> "*y
+noremap <C-v> "*p
+noremap <C-a> :%y*<CR>
 nnoremap <CR> :noh<CR>
 nnoremap <S-Tab> :tabprevious<CR>
 nnoremap <Tab> :tabnext<CR>

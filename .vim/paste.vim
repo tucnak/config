@@ -1,4 +1,4 @@
-" Tmux and copy pasting
+" tmux and copy pasting
 if !exists("g:bracketed_paste_tmux_wrap")
     let g:bracketed_paste_tmux_wrap = 1
 endif

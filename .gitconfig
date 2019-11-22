@@ -13,8 +13,8 @@
 [alias]
     ci  = commit
     cia = commit --amend
-    sci  = commit -S
-    scia = commit --amend -S
+    cis  = commit -S
+    cias = commit --amend -S
     br  = branch
     co  = checkout
     st  = status --short
@@ -37,9 +37,9 @@
     editor = vim
 
 [user]
-    name  = Ian Byrd
-	email = ian@byrd.im
-    signingkey = 598F598CA3B8055F
+    name  = Ian Patrick Badtrousers
+    email = badt@veritas.icu
+    signingkey = C5F69CFFB293E8E7
 
 [credential]
 	helper = osxkeychain
@@ -50,14 +50,14 @@
     pushInsteadOf = kde:
 
 [url "git@github.com:"]
-    insteadOf = github:
+    insteadOf = gh:
 [url "git@github.com:"]
-    pushInsteadOf = github:
+    pushInsteadOf = gh:
 
 [url "git@gitlab.com:"]
-    insteadOf = gitlab:
+    insteadOf = gl:
 [url "git@gitlab.com:"]
-    pushInsteadOf = gitlab:
+    pushInsteadOf = gl:
 
 [filter "lfs"]
     clean = git-lfs clean %f
