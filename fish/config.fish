@@ -3,7 +3,6 @@ set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin
 fish_vi_key_bindings
 
 alias termbin "nc termbin.com 9999"
-alias stat    "stat -x"
 alias ls      "ls -GFh"
 alias ll      "ls -l"
 alias la      "ll -a"
@@ -13,16 +12,17 @@ function reload
 end
 
 function config
+	if test (count $argv) -gt 0
+		vim $HOME/.config/fish/$argv[1].fish
+		return
+	end
+
 	vim $HOME/.config/fish/config.fish
 end
 
 function clever_pwd
-	printf "%s" (pwd \
-		| string replace $GOPATH "\$GOPATH" \
-		| string replace $HOME "\$HOME" \
-	)
+	pwd
 end
-
 
 source $HOME/.config/fish/public.fish
 if test -e $HOME/.config/fish/private.fish
@@ -41,7 +41,7 @@ function fish_prompt
 	set_color --bold yellow
 	printf "%s@%s " $USER (hostname)
 
-	if test -z ROOM
+	if test -n "$ROOM"
 		set_color --bold white
 		printf "<%s> " $ROOM
 	end
@@ -52,9 +52,7 @@ end
 
 function fish_right_prompt
 	set_color brblack
-	type -q clever_pwd; \
-		and printf "%s " (clever_pwd); \
-		or  printf "%s " (pwd)
+	printf "%s " (clever_pwd)
 
 	switch $fish_bind_mode
 		case default

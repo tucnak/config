@@ -36,3 +36,22 @@ function outpost
 	lsof -nP -i4TCP:$argv[1] | grep LISTEN
 end
 
+function iterm2_print_user_vars
+	set name -l (defaults read ~/Library/Preferences/com.apple.HIToolbox.plist |\
+		AppleSelectedInputSources |\
+		egrep -w 'KeyboardLayout Name' |\
+		sed -E 's/^.+ = \"?([^\"]+)\"?;$/\1/')
+
+	switch $layout
+		case "U.S."
+			set -l $name "EN"
+		case "RussianWin"
+			set -l $name "RU"
+		case "Ukrainian-PC"
+			set -l $name "UK"
+		case "*"
+			set -l $name "error: $layout"
+	end
+
+	iterm2_set_user_var layoutCode "$name"
+end

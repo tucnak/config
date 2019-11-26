@@ -28,7 +28,8 @@ set fileencoding=utf8
 set backspace=indent,eol,start
 set undolevels=1000
 set clipboard=unnamed
-set mouse-=a
+set mouse=a
+set ttymouse=xterm2
 set completeopt-=preview
 
 "set expandtab

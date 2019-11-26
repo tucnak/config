@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =4
-let g:netrw_dirhist_4='/Users/badt/.config/fish'
-let g:netrw_dirhist_3='/Users/badt/Devel/go/src/veritas.icu/api/.idea'
-let g:netrw_dirhist_2='/Users/badt/Devel/go/src/veritas.icu/api'
-let g:netrw_dirhist_1='/Users/badt/.config/fish/completions'
