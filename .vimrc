@@ -4,6 +4,7 @@ filetype plugin indent on
 syntax enable
 
 set wrap
+set linebreak
 set nobackup
 set nowritebackup
 set noswapfile
@@ -53,9 +54,10 @@ Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'manu-mannattil/vim-longlines'
+"Plug 'manu-mannattil/vim-longlines'
 Plug 'rhysd/vim-grammarous'
 Plug 'dag/vim-fish'
+"Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 source ~/.vim/functions.vim
@@ -68,9 +70,9 @@ let g:lightline = {
 "let g:go_fmt_command = "goimports"
 let g:go_fmt_command = "gofmt"
 
-autocmd FileType markdown setlocal wrap
+au BufNewFile,BufRead,BufReadPost *.md set syntax=mediawiki
+autocmd FileType markdown setlocal wrap expandtab softtabstop=4 shiftwidth=4
 autocmd FileType html setlocal wrap
-autocmd FileType mediawiki,tex,markdown,html LongLinesOn
 autocmd FileType go hi Error NONE
 autocmd BufWritePre * :%s/\s\+$//e
 

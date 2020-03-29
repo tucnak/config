@@ -1,5 +1,6 @@
 ack
 adns
+aircrack-ng
 ansible
 aom
 arp-scan
@@ -51,6 +52,7 @@ flex
 fltk
 fontconfig
 fortune
+fossil
 freealut
 freetype
 frei0r
@@ -72,6 +74,8 @@ glib-networking
 glog
 glpk
 gmp
+gnu-getopt
+gnu-tar
 gnupg
 gnuplot
 gnutls
@@ -144,12 +148,14 @@ libpng
 libpsl
 librsvg
 libsamplerate
+libscrypt
 libsndfile
 libsodium
 libsoup
 libsoxr
 libssh2
 libtasn1
+libtensorflow
 libtiff
 libtool
 libunistring
@@ -208,6 +214,7 @@ p11-kit
 p7zip
 pandoc
 pango
+pass
 pcre
 pcre2
 perl
@@ -222,6 +229,7 @@ plotutils
 png2ico
 portaudio
 postgresql
+postgresql@10
 protobuf
 protobuf@3.7
 pstoedit
@@ -248,6 +256,7 @@ screenfetch
 sdl
 sdl2
 shared-mime-info
+shtool
 sip
 sl
 snappy
@@ -268,7 +277,10 @@ tesseract
 texi2html
 texinfo
 theora
+tinygo
 tmux
+tor
+torsocks
 tree
 unbound
 usbmuxd
