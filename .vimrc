@@ -1,5 +1,3 @@
-command Goi GoImports
-
 filetype plugin indent on
 syntax enable
 
@@ -8,7 +6,6 @@ set linebreak
 set nobackup
 set nowritebackup
 set noswapfile
-
 set nocompatible
 set number
 set norelativenumber
@@ -31,44 +28,48 @@ set undolevels=1000
 set clipboard=unnamed
 set mouse=a
 set ttymouse=xterm2
-set completeopt-=preview
-
-"set expandtab
+set completeopt=longest,noinsert,menuone,noselect
 "set copyindent
-"set preserveindent
+set preserveindent
 "set softtabstop=4
 set noexpandtab
-set tabstop=8
-set shiftwidth=8
+set tabstop=4
+set shiftwidth=4
+set noshowmode
 
 call plug#begin()
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-eunuch'
 Plug 'garbas/vim-snipmate'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
 Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'manu-mannattil/vim-longlines'
 Plug 'rhysd/vim-grammarous'
 Plug 'dag/vim-fish'
-"Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 source ~/.vim/functions.vim
 source ~/.vim/paste.vim
 
-colorscheme elflord
+colorscheme laederon
+hi Normal guibg=NONE ctermbg=NONE
+hi LineNr ctermfg=gray ctermbg=NONE
+hi Pmenu ctermbg=gray guibg=gray
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ }
 "let g:go_fmt_command = "goimports"
 let g:go_fmt_command = "gofmt"
+
 
 au BufNewFile,BufRead,BufReadPost *.md set syntax=mediawiki
 autocmd FileType markdown setlocal wrap expandtab softtabstop=4 shiftwidth=4
@@ -76,18 +77,13 @@ autocmd FileType html setlocal wrap
 autocmd FileType go hi Error NONE
 autocmd BufWritePre * :%s/\s\+$//e
 
-"noremap <Up> <Nop>
-"noremap <Down> <Nop>
-"noremap <Left> <Nop>
-"noremap <Right> <Nop>
-
-noremap U :redo<CR>
-noremap <C-c> "*y
-noremap <C-v> "*p
-noremap <C-a> :%y*<CR>
+nnoremap U :redo<CR>
 nnoremap <CR> :noh<CR>
 nnoremap <S-Tab> :tabprevious<CR>
 nnoremap <Tab> :tabnext<CR>
-nnoremap <S-Down> :call SwapDown()<CR>
 nnoremap <S-Up> :call SwapUp()<CR>
+nnoremap <S-Down> :call SwapDown()<CR>
 inoremap <C-E> <ESC>:call emmet#expandAbbr(3,"")<CR>i
+nnoremap <C-a> :%y*<CR>
+nnoremap <C-i> :GoImports<CR>
+inoremap <C-c> <C-x><C-o>

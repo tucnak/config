@@ -14,6 +14,7 @@ automake
 bdw-gc
 bison
 boost
+brotli
 cairo
 calc
 ccache
@@ -28,7 +29,10 @@ cowsay
 cscope
 ctags
 curl
+dav1d
 dbus
+docbook
+docbook-xsl
 docker
 docker-compose
 docker-machine
@@ -171,7 +175,6 @@ libyaml
 libzip
 links
 little-cms2
-llvm
 lsusb
 lua
 luajit
@@ -181,10 +184,7 @@ mad
 make
 mercurial
 metis
-minikube
-mongodb
 mpfr
-mysql
 ncurses
 netpbm
 nettle
@@ -208,6 +208,7 @@ openssh
 openssl
 openssl@1.1
 openvpn
+optipng
 opus
 opusfile
 p11-kit
@@ -231,17 +232,16 @@ portaudio
 postgresql
 postgresql@10
 protobuf
-protobuf@3.7
 pstoedit
 pyqt
 python
 python@2
+python@3.8
 qhull
 qrencode
 qrupdate
 qscintilla2
 qt
-qt@5.5
 r
 readline
 reattach-to-user-namespace
@@ -264,6 +264,7 @@ solidity
 sox
 speex
 sqlite
+srt
 sshfs
 suite-sparse
 sundials
@@ -294,8 +295,10 @@ wget
 wrk
 x264
 x265
+xmlto
 xvid
 xz
+yarn
 yasm
 z3
 zeromq

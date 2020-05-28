@@ -44,6 +44,9 @@
 [credential]
 	helper =
 
+[gpg]
+	program = gpg
+
 [url "http://anongit.kde.org/"]
     insteadOf = kde:
 [url "git@git.kde.org:"]
@@ -59,9 +62,12 @@
 [url "git@gitlab.com:"]
     pushInsteadOf = gl:
 
+[url "git@circus:"]
+    insteadOf = circus:
+[url "git@circus:"]
+    pushInsteadOf = circus:
+
 [filter "lfs"]
     clean = git-lfs clean %f
     smudge = git-lfs smudge %f
     required = true
-[gpg]
-	program = gpg

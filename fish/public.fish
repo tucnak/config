@@ -1,5 +1,13 @@
-set -e GOROOT
-set -xg GO111MODULE on
+function gomod_on
+	set -xg GO111MODULE yes
+end
+
+function gomod_off
+	set -xg GO111MODULE no
+end
+
+set -xg ANDROID_HOME /Users/badt/Library/Android/sdk
+set -xg ANDROID_NDK_HOME /Users/badt/Dev/ndk
 
 set -xg CC "clang"
 set -xg CXX "clang++"
@@ -18,40 +26,41 @@ set -xg CLICOLOR 1
 set -xg LSCOLORS ExFxCxDxBxegedabagacad
 
 function terminal # user@host
-	set details (echo $argv)
-	ssh -C $details -t "tmux -CC at || tmux -CC"
+	set details $argv[1]
+	set mode $argv[2]
+	ssh -C $details -t "tmux -CC $mode"
 end
 
-function tunnel # user@host@port
+function tunnel # user@host:hostPort:clientPort
 	set details (echo $argv[1] | string split "@" | string split ":")
 
 	set user (echo $details | cut -d ' ' -f 1)
 	set host (echo $details | cut -d ' ' -f 2)
-	set port (echo $details | cut -d ' ' -f 3)
+	set userPort (echo $details | cut -d ' ' -f 3)
+	set localPort (echo $details | cut -d ' ' -f 4)
 
-	ssh -L $port:127.0.0.1:$port -CNfl $user $host
+	ssh -L $localPort:127.0.0.1:$userPort -CNl $user $host
 end
 
 function outpost
 	lsof -nP -i4TCP:$argv[1] | grep LISTEN
 end
 
+source ~/.iterm2_shell_integration.fish
 function iterm2_print_user_vars
-	set name -l (defaults read ~/Library/Preferences/com.apple.HIToolbox.plist |\
+	set layout (defaults read ~/Library/Preferences/com.apple.HIToolbox.plist \
 		AppleSelectedInputSources |\
 		egrep -w 'KeyboardLayout Name' |\
 		sed -E 's/^.+ = \"?([^\"]+)\"?;$/\1/')
 
-	switch $layout
+	switch "$layout"
 		case "U.S."
-			set -l $name "EN"
+			iterm2_set_user_var layoutCode "English"
 		case "RussianWin"
-			set -l $name "RU"
+			iterm2_set_user_var layoutCode "Russian"
 		case "Ukrainian-PC"
-			set -l $name "UK"
+			iterm2_set_user_var layoutCode "Ukrainian"
 		case "*"
-			set -l $name "error: $layout"
+			iterm2_set_user_var layoutCode "Unknown"
 	end
-
-	iterm2_set_user_var layoutCode "$name"
 end

@@ -2,6 +2,7 @@
 cp $HOME/.vimrc .
 cp $HOME/.gitconfig .
 cp $HOME/.tmux.conf .
-rsync -av --progress $HOME/.vim . --exclude plugged
-rsync -av --progress $HOME/.config/fish .
-gpg --armor --export badt@veritas.icu > badt.gpg
+rsync -av --progress $HOME/.vim . --exclude plugged --exclude .DS_Store
+rsync -av --progress $HOME/.config/fish . --exclude .DS_Store --exclude fishd.*
+gpg --armor --export badt@veritas.icu > badtrousers.gpg
+brew list > brewlist
