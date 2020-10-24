@@ -5,9 +5,6 @@ au FileType markdown setlocal tw=80 wrap expandtab softtabstop=4 shiftwidth=4
 au FileType html setlocal wrap
 au BufWritePre * :%s/\s\+$//e
 
-source ~/.vim/functions.vim
-source ~/.vim/paste.vim
-
 set wrap
 set linebreak
 set nobackup
@@ -41,28 +38,20 @@ set preserveindent
 set noexpandtab
 set tabstop=4
 set shiftwidth=4
-set noshowmode
 
 call plug#begin()
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-eunuch'
-Plug 'garbas/vim-snipmate'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
+Plug 'rust-lang/rust.vim'
 Plug 'mattn/emmet-vim'
-Plug 'mileszs/ack.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'rhysd/vim-grammarous'
 Plug 'dag/vim-fish'
 Plug 'othree/html5.vim'
-Plug 'rust-lang/rust.vim'
+Plug 'BeneCollyridam/futhark-vim'
 call plug#end()
 
 colorscheme laederon
@@ -83,12 +72,15 @@ nmap <Leader>a :%y*<CR>
 nmap <Leader>s :w<CR>
 imap <Leader>s <Esc>:w<CR>a
 nmap <Leader>w :GoImports<CR>
+nmap <Leader>rg :Rg<CR>
+nmap <Leader>f :tabe<CR>:GFiles<CR>
+nmap <Leader>F :tabe<CR>:Files<CR>
 
 nmap <Enter> :noh<CR>
 nmap <Tab> :tabnext<CR>
 nmap <S-Tab> :tabprevious<CR>
-nmap <S-Up> :call SwapUp()<CR>
-nmap <S-Down> :call SwapDown()<CR>
+
 nmap U :redo<CR>
-vmap tt :s/\t/    /g<CR>
+vmap tt :s/\t/    /<CR>
+vmap r :s/
 imap .<Tab> .<C-x><C-o>

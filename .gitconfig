@@ -52,15 +52,15 @@
 [url "git@git.kde.org:"]
     pushInsteadOf = kde:
 
-[url "git@github.com:"]
+[url "https://github.com/"]
     insteadOf = gh:
 [url "git@github.com:"]
     pushInsteadOf = gh:
 
-[url "git@gitlab.com:"]
-    insteadOf = gl:
-[url "git@gitlab.com:"]
-    pushInsteadOf = gl:
+[url "git@github.com:"]
+    insteadOf = ggh:
+[url "git@github.com:"]
+    pushInsteadOf = ggh:
 
 [url "git@circus:"]
     insteadOf = circus:
