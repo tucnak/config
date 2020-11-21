@@ -14,6 +14,7 @@ aubio
 autoconf
 automake
 bdw-gc
+berkeley-db
 bison
 boost
 brotli
@@ -119,12 +120,14 @@ ios-deploy
 ipython
 irrlicht
 isl
+jansson
 jasper
 jbig2dec
 jpeg
 jsonpp
 jupyter
 jupyterlab
+krb5
 kubernetes-cli
 kubernetes-helm
 lame
@@ -136,6 +139,7 @@ libassuan
 libav
 libb2
 libbluray
+libcbor
 libcerf
 libconfig
 libcroco
@@ -143,6 +147,7 @@ libde265
 libepoxy
 libevent
 libffi
+libfido2
 libgcrypt
 libgnt
 libgpg-error
@@ -159,6 +164,7 @@ libmicrohttpd
 libmpc
 libnotify
 libogg
+libolm
 libomp
 libotr
 libpcap
@@ -205,6 +211,7 @@ mercurial
 metis
 mpfr
 ncurses
+netcdf
 netpbm
 nettle
 ninja
@@ -254,9 +261,9 @@ postgresql@10
 protobuf
 pstoedit
 pyqt
-python
 python@2
 python@3.8
+python@3.9
 qhull
 qrencode
 qrupdate
@@ -274,6 +281,7 @@ rtmpdump
 rubberband
 ruby
 rust
+sbcl
 screenfetch
 sdl
 sdl2
@@ -293,6 +301,7 @@ srt
 sshfs
 suite-sparse
 sundials
+swi-prolog
 swig
 szip
 taglib
@@ -310,11 +319,14 @@ tor
 torsocks
 tree
 unbound
+unixodbc
 usbmuxd
+utf8proc
 vala
 vamp-plugin-sdk
 veclibfort
 vim
+vtk
 watch
 webp
 weechat

@@ -1,5 +1,6 @@
 #!/usr/local/bin/fish
 cp $HOME/.vimrc .
+cp $HOME/.gvimrc .
 cp $HOME/.gitconfig .
 cp $HOME/.tmux.conf .
 rsync -av --progress $HOME/.vim . --exclude plugged --exclude .DS_Store
