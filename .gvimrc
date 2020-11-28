@@ -1,7 +1,33 @@
-set lines=50 columns=84
-set guifont=Roboto\ Mono:h11
+set lines=50 columns=70
+set guifont=Roboto\ Mono:h13
+set printfont=Roboto\ Mono:h13
 colorscheme plan9
-hi playfountTitle gui=bold guifg=darkgreen
-hi playfountScene gui=bold guifg=firebrick
-hi playfountParenthetical guifg=gray
-hi playfountNotes gui=italic guifg=magenta
+
+nmap \ :Goyo<CR>
+fun! PlayfountStyle()
+	hi todo gui=bold
+	hi playfountParenthetical guifg=gray36
+	hi playfountTitle	gui=bold	guifg=darkgreen
+	hi playfountScene	gui=bold	guifg=firebrick
+	hi playfountNotes	gui=italic	guifg=darkblue
+endfun
+call PlayfountStyle()
+au! User GoyoLeave nested call PlayfountStyle()
+
+fun! PlayfountStatus()
+	let l:status = v:statusmsg
+    try
+        exe "silent normal! g\<C-g>"
+        echo printf('%s, %.0fmin readtime',
+                    \ v:statusmsg, ceil(wordcount()['words'] / 200.0))
+    finally
+        let v:statusmsg = l:status
+    endtry
+endfun
+
+" messes with omnicomplete
+au FileType playft imap <silent> <Up> <Esc>gka
+au FileType playft imap <silent> <Down> <Esc>gja
+au FileType playft set lines=50 columns=70
+au FileType playft set laststatus=0
+au FileType playft set guifont=Roboto\ Mono:h15

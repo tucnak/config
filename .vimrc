@@ -2,10 +2,10 @@ syntax enable
 filetype plugin indent on
 au BufWritePre * :%s/\s\+$//e
 au BufNewFile,BufRead,BufReadPost *.md set syntax=mediawiki
-au FileType markdown setlocal tw=80 wrap expandtab softtabstop=4 shiftwidth=4
+"au FileType markdown setlocal tw=80 wrap
 au FileType html setlocal wrap
-autocmd FileType go nmap <Leader><F1> :GoDoc<CR>
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ.;ABCDEFGHIJKLMNOPQRSTUVWXYZ:/,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+au FileType go nmap <Leader><F1> :GoDoc<CR>
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня.;abcdefghijklmnopqrstuvwxyz/
 set keywordprg=":help"
 set wrap
 set linebreak
@@ -15,7 +15,7 @@ set noswapfile
 set nocompatible
 set noshowmode
 set number
-set ruler
+set noruler
 set norelativenumber
 set showmatch
 set hlsearch
@@ -57,10 +57,11 @@ Plug 'othree/html5.vim'
 Plug 'BeneCollyridam/futhark-vim'
 Plug 'wellle/targets.vim'
 Plug 'tucnak/vim-playfount'
+Plug 'junegunn/goyo.vim'
 call plug#end()
 
 set t_Co=256
-colorscheme pablo
+colorscheme plan9
 "hi Normal guibg=NONE ctermbg=NONE
 "hi Normal ctermbg=NONE
 "hi nonText ctermbg=NONE

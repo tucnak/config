@@ -13,11 +13,6 @@ set -xg CC "clang"
 set -xg CXX "clang++"
 set -xg CCACHE_CPP2 YES
 
-gpgconf --launch gpg-agent
-echo | gpg-connect-agent
-set -xg GPG_TTY (tty)
-set -xg SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-
 set -xg LANG en_US.UTF-8
 set -xg LC_CTYPE en_US.UTF-8
 set -xg LC_ALL en_US.UTF-8
@@ -44,23 +39,4 @@ end
 
 function outpost
 	lsof -nP -i4TCP:$argv[1] | grep LISTEN
-end
-
-source ~/.iterm2_shell_integration.fish
-function iterm2_print_user_vars
-	set layout (defaults read ~/Library/Preferences/com.apple.HIToolbox.plist \
-		AppleSelectedInputSources |\
-		egrep -w 'KeyboardLayout Name' |\
-		sed -E 's/^.+ = \"?([^\"]+)\"?;$/\1/')
-
-	switch "$layout"
-		case "U.S."
-			iterm2_set_user_var layoutCode "English"
-		case "RussianWin"
-			iterm2_set_user_var layoutCode "Russian"
-		case "Ukrainian-PC"
-			iterm2_set_user_var layoutCode "Ukrainian"
-		case "*"
-			iterm2_set_user_var layoutCode "Unknown"
-	end
 end
