@@ -1,12 +1,14 @@
 syntax enable
 filetype plugin indent on
 au BufWritePre * :%s/\s\+$//e
-au BufNewFile,BufRead,BufReadPost *.md set syntax=mediawiki
+"au BufNewFile,BufRead,BufReadPost *.md set syntax=mediawiki
 "au FileType markdown setlocal tw=80 wrap
 au FileType html setlocal wrap
-au FileType go nmap <Leader><F1> :GoDoc<CR>
+au FileType go nmap <leader><F1> :GoDoc<CR>
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня.;abcdefghijklmnopqrstuvwxyz/
+set shell=/usr/local/bin/fish
 set keywordprg=":help"
+set splitright
 set wrap
 set linebreak
 set nobackup
@@ -61,7 +63,7 @@ Plug 'junegunn/goyo.vim'
 call plug#end()
 
 set t_Co=256
-colorscheme plan9
+colorscheme default
 "hi Normal guibg=NONE ctermbg=NONE
 "hi Normal ctermbg=NONE
 "hi nonText ctermbg=NONE
@@ -92,12 +94,17 @@ let g:lightline = {
     \ }
 let g:go_fmt_command = "gofmt"
 
-nmap <Leader>a :%y*<CR>
-nmap <Leader>s :w<CR>
-nmap <Leader>goi :GoImports<CR>
-nmap <Leader>rg :Rg<CR>
-nmap <Leader>f :tabe<CR>:Files<CR>
-nmap <Leader>F :tabe<CR>:GFiles<CR>
+nmap <leader>a :%y*<CR>
+nmap <leader>s :w<CR>
+nmap <silent> <leader>goi :GoImports<CR>
+nmap <silent> <leader>gob :GoBuild<CR>
+nmap <leader>rg :Rg<CR>
+nmap <leader>f :tabe<CR>:Files<CR>
+nmap <leader>F :tabe<CR>:GFiles<CR>
+nmap <leader>p :set paste<CR>
+nmap <leader>np :set nopaste<CR>
+nmap <silent> <leader>qj :cn<CR>
+nmap <silent> <leader>qk :cp<CR>
 
 nmap <silent> U :redo<CR>
 nmap <silent> Г :redo<CR>
@@ -113,9 +120,9 @@ nmap <silent> <Left> h
 nmap <silent> <Up> gk
 nmap <silent> <Down> gj
 
-imap <Leader><Tab> <C-x><C-o>
-imap <Leader>e <ESC>:call emmet#expandAbbr(3,"")<CR>i
-imap <Leader>s <ESC>:w<CR>a
+imap <leader><Tab> <C-x><C-o>
+imap <leader>e <ESC>:call emmet#expandAbbr(3,"")<CR>i
+imap <leader>s <ESC>:w<CR>a
 imap <S-Tab> <BS>
 
 vmap tt :s/\t/    /<CR>

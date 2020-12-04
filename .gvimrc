@@ -7,9 +7,10 @@ nmap \ :Goyo<CR>
 fun! PlayfountStyle()
 	hi todo gui=bold
 	hi playfountParenthetical guifg=gray36
-	hi playfountTitle	gui=bold	guifg=darkgreen
-	hi playfountScene	gui=bold	guifg=firebrick
-	hi playfountNotes	gui=italic	guifg=darkblue
+	hi playfountTitle	gui=bold guifg=darkgreen
+	hi playfountNotes	gui=italic guifg=darkblue
+	hi playfountScene	gui=bold,underline guifg=firebrick
+	hi playfountCentered gui=bold,italic,underline
 endfun
 call PlayfountStyle()
 au! User GoyoLeave nested call PlayfountStyle()
