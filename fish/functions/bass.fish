@@ -1,1 +1,0 @@
-/Users/badt/.config/fisherman/bass/functions/bass.fish

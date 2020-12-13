@@ -1,11 +1,22 @@
 set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin
 
+source $HOME/.config/fish/public.fish
+if test -e $HOME/.config/fish/private.fish
+	source $HOME/.config/fish/private.fish
+end
+
+if status is-interactive
+else
+    exit
+end
+
 fish_vi_key_bindings
 
 alias termbin "nc termbin.com 9999"
 alias ls      "ls -GFh"
 alias ll      "ls -l"
 alias la      "ll -a"
+alias tree    "tree -N"
 
 function reload
 	source $HOME/.config/fish/config.fish
@@ -18,15 +29,6 @@ function config
 	end
 
 	vim $HOME/.config/fish/config.fish
-end
-
-function clever_pwd
-	pwd
-end
-
-source $HOME/.config/fish/public.fish
-if test -e $HOME/.config/fish/private.fish
-	source $HOME/.config/fish/private.fish
 end
 
 set -xg fish_user_paths $PATH
@@ -52,7 +54,6 @@ end
 
 function fish_right_prompt
 	set_color brblack
-	printf "%s " (clever_pwd)
 
 	switch $fish_bind_mode
 		case default
