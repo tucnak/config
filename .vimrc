@@ -5,11 +5,12 @@ filetype plugin indent on
 set exrc
 set wrap
 set linebreak
+set noshowmode
+set noshowcmd
 set nobackup
 set nowritebackup
 set noswapfile
 set nocompatible
-set noshowmode
 set number
 set nornu
 set noruler
@@ -50,11 +51,11 @@ au FileType c,cpp,java setlocal commentstring=//\ %s
 au FileType sql setlocal commentstring=--\ %s
 au FileType go nmap <leader>h :GoDoc<CR>
 " relative numbers in visual mode
-au CursorMoved * if mode() !~# "[vV\<C-v>]" | set nu nornu | endif
-vnoremap <Esc> <Esc>:set nu nornu<CR>
-nnoremap <silent> v v:<C-u>set nonu rnu<CR>gv
-nnoremap <silent> V V:<C-u>set nonu rnu<CR>gv
-nnoremap <silent> <C-v> <C-v>:<C-u>set nonu rnu<CR>gv
+au CursorMoved * if mode() !~# "[vV\<C-v>]" | set nornu | endif
+vnoremap <silent> <Esc> <Esc>:set nornu<CR>
+nnoremap <silent> v :set rnu<CR>v
+nnoremap <silent> V :set rnu<CR>V
+nnoremap <silent> <C-v> <C-v>:<C-u>set rnu<CR>gv
 
 call plug#begin()
 Plug 'junegunn/fzf.vim'
@@ -65,6 +66,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
@@ -74,6 +76,8 @@ Plug 'BeneCollyridam/futhark-vim'
 Plug 'wellle/targets.vim'
 Plug 'tucnak/vim-playfount'
 Plug 'junegunn/goyo.vim'
+Plug 'tckmn/vim-minisnip'
+Plug 'sebdah/vim-delve'
 call plug#end()
 
 fun! Readtime()
@@ -91,20 +95,23 @@ endfun
 
 let mapleader = ","
 nmap <leader>s :w<CR>
-nmap <leader>g :Rg<CR>
-nmap <leader>f :Files<CR>
-nmap <leader>gf :GFiles<CR>
+nmap <leader>v :vert<Space>
 nmap <leader>b :Buffers<CR>
 nmap <leader>m :Marks<CR>
+nmap <leader>f :Files<CR>
+nmap <leader>gf :GFiles<CR>
+nmap <leader>rg :Rg<Space>
+nmap <silent> <leader>i :set modifiable<CR>
 nmap <silent> <leader>p :set paste<CR>
 nmap <silent> <leader>np :set nopaste<CR>
 nmap <silent> <leader>goi :GoImports<CR>
 nmap <silent> <leader>gob :GoBuild<CR>
 nmap <silent> <leader>wc :call Readtime()<CR>
 imap <leader><Tab> <C-x><C-o>
-imap <leader>e <ESC>:call emmet#expandAbbr(3,"")<CR>i
+imap <leader>ex <ESC>:call emmet#expandAbbr(3,"")<CR>i
 imap <leader>s <ESC>:w<CR>a
-
+imap <leader>yo ё
+imap <leader>Yo Ё
 nmap <silent> U :redo<CR>
 nmap <silent> Г :redo<CR>
 nmap <silent> <Enter> :noh<CR>
@@ -119,14 +126,14 @@ nnoremap gj j
 nnoremap k gk
 nnoremap gk k
 " therefore
-nmap <silent> <Left> h
-nmap <silent> <Down> j
-nmap <silent> <Up> k
-nmap <silent> <Right> l
-vmap <silent> <Left> h
-vmap <silent> <Down> j
-vmap <silent> <Up> k
-vmap <silent> <Right> l
+nnoremap <silent> <Left> h
+nnoremap <silent> <Down> j
+nnoremap <silent> <Up> k
+nnoremap <silent> <Right> l
+vnoremap <silent> <Left> h
+vnoremap <silent> <Down> j
+vnoremap <silent> <Up> k
+vnoremap <silent> <Right> l
 nmap <silent> <C-h> :wincmd h<CR>
 nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-k> :wincmd k<CR>

@@ -182,15 +182,18 @@ libsoxr
 libssh2
 libtasn1
 libtensorflow
+libtermkey
 libtiff
 libtool
 libunistring
 libusb
 libusbmuxd
+libuv
 libvidstab
 libvo-aacenc
 libvorbis
 libvpx
+libvterm
 libxml2
 libxmlsec1
 libyaml
@@ -210,7 +213,9 @@ make
 mercurial
 metis
 mpfr
+msgpack
 ncurses
+neovim
 netcdf
 netpbm
 nettle
@@ -319,6 +324,7 @@ tor
 torsocks
 tree
 unbound
+unibilium
 unixodbc
 usbmuxd
 utf8proc

@@ -35,9 +35,10 @@
 [core]
     pager  = less -+$LESS -FRX
     editor = vim
+	quotePath = false
 
 [user]
-    name  = Ian Patrick Badtrousers
+    name  = Ian P Badtrousers
     email = badt@veritas.icu
     signingkey = E7E1EDF9CF47F015451ECF46C5F69CFFB293E8E7
 
@@ -56,6 +57,11 @@
     insteadOf = gh:
 [url "git@github.com:"]
     pushInsteadOf = gh:
+
+[url "git@gitlab.com:"]
+    insteadOf = gl:
+[url "git@gitlab.com:"]
+    pushInsteadOf = gl:
 
 [url "git@github.com:"]
     insteadOf = ggh:
