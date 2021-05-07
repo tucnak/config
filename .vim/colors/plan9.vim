@@ -59,7 +59,7 @@ hi PmenuSbar ctermfg=2 ctermbg=13 guifg=#468747 guibg=#96d197 guisp=NONE cterm=N
 hi PmenuSel ctermfg=10 ctermbg=2 guifg=#ebffeb guibg=#468747 guisp=NONE cterm=NONE gui=NONE
 hi PmenuThumb ctermfg=10 ctermbg=2 guifg=#ebffeb guibg=#468747 guisp=NONE cterm=NONE gui=NONE
 hi Search ctermfg=0 ctermbg=12 guifg=#000000 guibg=#ebffff guisp=NONE cterm=NONE gui=NONE
-hi StatusLine ctermfg=0 ctermbg=12 guifg=#000000 guibg=#ebffff guisp=NONE cterm=NONE gui=NONE
+hi StatusLine ctermfg=0 ctermbg=12 guifg=#000000 guibg=NONE guisp=NONE cterm=NONE gui=NONE "guibg=#ebffff
 hi StatusLineNC ctermfg=0 ctermbg=7 guifg=#000000 guibg=#f3f3d3 guisp=NONE cterm=NONE gui=NONE
 hi TabLine ctermfg=0 ctermbg=7 guifg=#000000 guibg=#f3f3d3 guisp=NONE cterm=NONE gui=NONE
 hi TabLineFill ctermfg=0 ctermbg=7 guifg=#000000 guibg=#f3f3d3 guisp=NONE cterm=NONE gui=NONE

@@ -1,5 +1,7 @@
 set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin
 
+set -xg SHELL /usr/local/bin/fish
+
 source $HOME/.config/fish/public.fish
 if test -e $HOME/.config/fish/private.fish
 	source $HOME/.config/fish/private.fish

@@ -13,7 +13,7 @@ set noswapfile
 set nocompatible
 set number
 set nornu
-set noruler
+set ruler
 set showmatch
 set hlsearch
 set smartcase
@@ -34,12 +34,14 @@ set textwidth=0
 set wrapmargin=0
 set fileencoding=utf8
 set virtualedit=onemore
+set hidden
 set backspace=indent,eol,start
 set undolevels=1000
 set mouse=a
 set ttymouse=xterm2
 set completeopt=longest,noinsert,menuone,noselect
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+set fillchars=vert:\ ,fold:-,diff:-
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня.хъ;abcdefghijklmnopqrstuvwxyz/[]
 set shell=/usr/local/bin/fish
 set keywordprg=":help"
@@ -49,7 +51,6 @@ au BufWritePre * :%s/\s\+$//e " trailing spaces
 au FileType json set sw=2 et
 au FileType c,cpp,java setlocal commentstring=//\ %s
 au FileType sql setlocal commentstring=--\ %s
-au FileType go nmap <leader>h :GoDoc<CR>
 " relative numbers in visual mode
 au CursorMoved * if mode() !~# "[vV\<C-v>]" | set nornu | endif
 vnoremap <silent> <Esc> <Esc>:set nornu<CR>
@@ -58,6 +59,7 @@ nnoremap <silent> V :set rnu<CR>V
 nnoremap <silent> <C-v> <C-v>:<C-u>set rnu<CR>gv
 
 call plug#begin()
+Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'tpope/vim-sensible'
@@ -67,18 +69,24 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-Plug 'itchyny/lightline.vim'
-Plug 'fatih/vim-go'
-Plug 'rust-lang/rust.vim'
-Plug 'mattn/emmet-vim'
-Plug 'othree/html5.vim'
-Plug 'BeneCollyridam/futhark-vim'
 Plug 'wellle/targets.vim'
+"Plug 'itchyny/lightline.vim'
+Plug 'fatih/vim-go'
+Plug 'mattn/emmet-vim'
+Plug 'BeneCollyridam/futhark-vim'
 Plug 'tucnak/vim-playfount'
-Plug 'junegunn/goyo.vim'
-Plug 'tckmn/vim-minisnip'
+"Plug 'junegunn/goyo.vim'
 Plug 'sebdah/vim-delve'
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
+
+let g:mkdp_preview_options = {
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 1
+    \ }
+let g:mkdp_markdown_css = expand('~/.vim/markdown.css')
 
 fun! Readtime()
 	let l:wc = wordcount()
@@ -99,15 +107,16 @@ nmap <leader>v :vert<Space>
 nmap <leader>b :Buffers<CR>
 nmap <leader>m :Marks<CR>
 nmap <leader>f :Files<CR>
+nmap <leader>db :bp<bar>sp<bar>bn<bar>bd!<CR>
 nmap <leader>gf :GFiles<CR>
 nmap <leader>rg :Rg<Space>
+nmap <leader>md :MarkdownPreviewToggle<CR>
 nmap <silent> <leader>i :set modifiable<CR>
 nmap <silent> <leader>p :set paste<CR>
 nmap <silent> <leader>np :set nopaste<CR>
-nmap <silent> <leader>goi :GoImports<CR>
-nmap <silent> <leader>gob :GoBuild<CR>
 nmap <silent> <leader>wc :call Readtime()<CR>
 imap <leader><Tab> <C-x><C-o>
+imap <S-Tab> <C-o>
 imap <leader>ex <ESC>:call emmet#expandAbbr(3,"")<CR>i
 imap <leader>s <ESC>:w<CR>a
 imap <leader>yo ё
@@ -115,10 +124,10 @@ imap <leader>Yo Ё
 nmap <silent> U :redo<CR>
 nmap <silent> Г :redo<CR>
 nmap <silent> <Enter> :noh<CR>
-nmap <silent> <Tab> :tabnext<CR>
-nmap <silent> <S-Tab> :tabprevious<CR>
 vmap <silent> tt :s/\t/    /<CR>:noh<CR>
 vmap <silent> TT :s/    /\t/<CR>:noh<CR>
+
+nmap <leader>. :make<CR>
 
 " controversial, but probably good
 nnoremap j gj
@@ -139,8 +148,15 @@ nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-l> :wincmd l<CR>
 
+"go specific binds
+au FileType go nmap gos :!speed<Space>
+au FileType go nmap gop :!probe<Space>
+au FileType go nmap <silent> gob :GoBuild<CR>
+au FileType go nmap <silent> goi :GoImports<CR>
+au FileType go nmap <silent> gor :GoRename<CR>
+
 let g:lightline = {
-	\ 'colorscheme': 'seoul256',
+	\ 'colorscheme': 'landscape',
 	\ 'mode_map': {
         \ 'n' : 'N',
         \ 'i' : 'I',
@@ -156,3 +172,8 @@ let g:lightline = {
         \ },
     \ }
 let g:go_fmt_command = "gofmt"
+
+augroup myvimrc
+    au!
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
