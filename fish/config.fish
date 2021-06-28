@@ -73,3 +73,4 @@ function fish_right_prompt
 	end
 	set_color normal
 end
+#fish_add_path /usr/local/opt/openjdk/bin

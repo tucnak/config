@@ -1,7 +1,7 @@
 colorscheme plan9
 
 "set lines=40 columns=82
-set nonu
+"set nonu
 set guifont=Roboto\ Mono:h15
 set printfont=Roboto\ Mono:h15
 set linebreak
