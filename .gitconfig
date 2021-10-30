@@ -39,15 +39,19 @@
 
 [user]
     name  = Ian P Badtrousers
-    email = badt@veritas.icu
-    signingkey = E7E1EDF9CF47F015451ECF46C5F69CFFB293E8E7
+    email = badt@aletheia.icu
+    signingkey = F31F7F1D7626152BA1FA52C9D2F335802C30EBD1
+
+[gpg]
+	program = /usr/local/bin/gpg
 
 [credential]
 	helper =
 
-[gpg]
-	program = gpg
-
+[url "https://git.sr.ht/"]
+    insteadOf = hut:
+[url "git@git.sr.ht:"]
+    pushInsteadOf = hut:
 [url "http://anongit.kde.org/"]
     insteadOf = kde:
 [url "git@git.kde.org:"]
@@ -77,3 +81,5 @@
     clean = git-lfs clean %f
     smudge = git-lfs smudge %f
     required = true
+[init]
+	defaultBranch = master

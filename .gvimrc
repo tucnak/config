@@ -1,9 +1,8 @@
-colorscheme plan9
+"colorscheme plan9
 
-"set lines=40 columns=82
-"set nonu
-set guifont=Roboto\ Mono:h15
-set printfont=Roboto\ Mono:h15
+set lines=40 columns=75
+set noruler
+set guifont=Fira\ Code:h13
 set linebreak
 set noshowmode
 set laststatus=0

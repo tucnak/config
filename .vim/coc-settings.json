@@ -1,8 +1,0 @@
-{
-  "diagnostic.messageTarget": "echo",
-  "diagnostic.checkCurrentLine": true,
-  "signature.target": "echo",
-  "coc.preferences.hoverTarget": "echo",
-  "javascript.suggestionActions.enabled": true,
-  "typescript.suggestionActions.enabled": true
-}

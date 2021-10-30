@@ -1,8 +1,11 @@
 ack
+acpica
 adns
 aircrack-ng
 ansible
 aom
+apr
+apr-util
 arp-scan
 arpack
 aspell
@@ -25,6 +28,7 @@ cairo
 cairomm
 cairomm@1.14
 calc
+catch2
 cayley
 ccache
 ceres-solver
@@ -49,6 +53,8 @@ dos2unix
 double-conversion
 doxygen
 eigen
+elasticsearch
+emscripten
 enchant
 entr
 epstool
@@ -64,6 +70,7 @@ fish
 flac
 flex
 fltk
+fmt
 fontconfig
 fortune
 fossil
@@ -135,6 +142,7 @@ jsoncpp
 jsonpp
 jupyter
 jupyterlab
+kibana-full
 krb5
 kubernetes-cli
 kubernetes-helm
@@ -162,6 +170,7 @@ libgnt
 libgpg-error
 libheif
 libiconv
+libidl
 libidn
 libidn2
 libimobiledevice
@@ -169,6 +178,7 @@ libkeccak
 libksba
 liblo
 liblqr
+libmagic
 libmicrohttpd
 libmpc
 libnotify
@@ -187,10 +197,12 @@ libsamplerate
 libscrypt
 libsigc++
 libsigc++@2
+libslirp
 libsndfile
 libsodium
 libsoup
 libsoxr
+libssh
 libssh2
 libtasn1
 libtensorflow
@@ -218,11 +230,13 @@ libyaml
 lilv
 links
 little-cms2
+llvm
 lrdf
 lsusb
 lua
 luajit
 luajit-openresty
+luarocks
 luv
 lv2
 lz4
@@ -232,6 +246,7 @@ mad
 make
 mercurial
 metis
+minetest
 mpdecimal
 mpfr
 msgpack
@@ -256,8 +271,10 @@ openblas
 opencore-amr
 opencv
 openexr
+openjdk
 openjpeg
 openldap
+opensearch
 openssh
 openssl@1.1
 openvpn
@@ -270,7 +287,6 @@ pandoc
 pango
 pangomm
 pangomm@2.46
-pass
 pcre
 pcre2
 perl
@@ -294,6 +310,7 @@ pyqt@5
 python@2
 python@3.8
 python@3.9
+qemu
 qhull
 qrencode
 qrupdate
@@ -331,6 +348,7 @@ sqlite
 sratom
 srt
 sshfs
+subversion
 suite-sparse
 sundials
 swi-prolog
@@ -351,6 +369,7 @@ tmux
 tor
 torsocks
 tree
+tree-sitter
 unbound
 unibilium
 unixodbc
@@ -359,6 +378,7 @@ utf8cpp
 utf8proc
 vala
 vamp-plugin-sdk
+vde
 veclibfort
 vim
 vtk
@@ -369,12 +389,15 @@ wget
 wrk
 x264
 x265
+x86_64-elf-binutils
+x86_64-elf-gcc
 xmlto
 xorgproto
 xvid
 xz
 yarn
 yasm
+yuicompressor
 z3
 zeromq
 zimg

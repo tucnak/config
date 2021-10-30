@@ -1,6 +1,8 @@
 set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin
 
 set -xg SHELL /usr/local/bin/fish
+set -xg HOMEBREW_NO_AUTO_UPDATE 1
+set -xg GPG_TTY (tty)
 
 source $HOME/.config/fish/public.fish
 if test -e $HOME/.config/fish/private.fish
