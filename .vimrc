@@ -99,7 +99,7 @@ nmap <leader>v :vert<Space>
 nmap <silent> <leader>i :set modifiable<CR>
 nmap <silent> <leader>p :set paste<CR>
 nmap <silent> <leader>np :set nopaste<CR>
-nmap <silent> <leader>db :bp<bar>sp<bar>bn<bar>bd!<CR>
+nmap <silent> <leader>bd :bp<bar>sp<bar>bn<bar>bd!<CR>
 "imap <leader><Tab> <C-x><C-o>
 imap <silent> <leader>/ <ESC>:call emmet#expandAbbr(3,"")<CR>i
 imap <leader>yo ё
@@ -113,11 +113,10 @@ nmap <silent> <Enter> :noh<CR>
 " remove trailing spaces
 au BufWritePre * :%s/\s\+$//e
 " reload .vimrc on save
-au BufWritePost .vimrc nmap <leader>, :w<CR>:source %<CR>
-au FileType go nmap <leader>, :w<CR>:silent exec "!goimports -w ."<CR>
-au FileType go nmap gop :!probe<Space>
-au FileType go nmap gos :!speed<Space>
-au FileType go nmap <silent> gob :silent exe '!go build'<CR>
+au BufWritePost .vimrc nmap <buffer> <leader>, :w<CR>:source %<CR>
+au FileType go nmap <buffer> <leader>, :w<CR>:silent exec "!goimports -w ."<CR>
+au FileType go nmap <buffer> gop :!probe<Space>
+au FileType go nmap <buffer> gos :!speed<Space>
 au FileType svelte setlocal indentexpr=HtmlIndent()
 au FileType c,cpp,java setlocal commentstring=//\ %s
 au FileType sql setlocal commentstring=--\ %s

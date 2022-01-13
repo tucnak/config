@@ -1,26 +1,55 @@
-set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin
-
-set -xg SHELL /usr/local/bin/fish
-set -xg HOMEBREW_NO_AUTO_UPDATE 1
-set -xg GPG_TTY (tty)
-
-source $HOME/.config/fish/public.fish
-if test -e $HOME/.config/fish/private.fish
-	source $HOME/.config/fish/private.fish
-end
-
-if status is-interactive
-else
-    exit
-end
-
 fish_vi_key_bindings
+
+function sudo --description "sudo !!"
+    if test "$argv" = !!
+    eval command sudo $history[1]
+else
+    command sudo $argv
+    end
+end
 
 alias termbin "nc termbin.com 9999"
 alias ls      "ls -GFh"
-alias ll      "ls -l"
-alias la      "ll -a"
 alias tree    "tree -N"
+
+gpgconf --launch gpg-agent
+
+set -xg GOPATH $HOME/go
+set -xg GOROOT /usr/local/go
+set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin $HOME/bin $GOROOT/bin $GOPATH/bin $HOME/.cargo/bin
+
+set -xg LIBRARY_PATH /usr/local/lib /usr/local/opt/openssl/lib
+set -xg CPLUS_INCLUDE_PATH /usr/local/include /usr/local/opt/ccache/libexec
+set -xg PKG_CONFIG_PATH /lib/pkgconfig /usr/local/lib/pkgconfig /usr/local/opt/libarchive/lib/pkgconfig
+set -xg CC "clang"
+set -xg CXX "clang++"
+set -xg LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/openblas/lib -L/usr/local/opt/sqlite/lib"
+set -xg CPPFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/openblas/include -I/usr/local/opt/sqlite/include"
+set -xg CCACHE_CPP2 YES
+set -xg LANG en_US.UTF-8
+set -xg LC_CTYPE en_US.UTF-8
+set -xg LC_ALL en_US.UTF-8
+set -xg CLICOLOR 1
+set -xg LSCOLORS ExFxCxDxBxegedabagacad
+set -xg HOMEBREW_NO_AUTO_UPDATE 1
+
+if test -e $HOME/.config/fish/private.fish
+	source $HOME/.config/fish/private.fish
+end
+if test -e $HOME/.config/fish/iterm2.fish
+	source $HOME/.config/fish/iterm2.fish
+end
+source $HOME/dev/gcloud/path.fish.inc
+
+function sshtmux
+	set details $argv[1]
+	set mode $argv[2]
+	ssh -C $details -t "tmux -CC $mode"
+end
+
+function outpost
+	lsof -nP -i4TCP:$argv[1] | grep LISTEN
+end
 
 function reload
 	source $HOME/.config/fish/config.fish
@@ -31,11 +60,8 @@ function config
 		vim $HOME/.config/fish/$argv[1].fish
 		return
 	end
-
 	vim $HOME/.config/fish/config.fish
 end
-
-set -xg fish_user_paths $PATH
 
 function fish_greeting
 end
@@ -44,12 +70,12 @@ function fish_mode_prompt
 end
 
 function fish_prompt
-	set_color --bold yellow
+	set_color --bold red
 	printf "%s@%s " $USER (hostname)
 
-	if test -n "$ROOM"
+	if test -n "$MNTROOM"
 		set_color --bold white
-		printf "<%s> " $ROOM
+		printf "<%s> " $MNTROOM
 	end
 
 	set_color normal
@@ -61,11 +87,11 @@ function fish_right_prompt
 
 	switch $fish_bind_mode
 		case default
-			set_color --bold -b brcyan
+			set_color --bold -b grey
 			printf ' N '
 		case insert
-			set_color --bold -b green
-			printf ' I '
+			# set_color --bold -b green
+			# printf ' I '
 		case replace_one
 			set_color --bold -b red
 			printf ' R '
@@ -75,4 +101,3 @@ function fish_right_prompt
 	end
 	set_color normal
 end
-#fish_add_path /usr/local/opt/openjdk/bin

@@ -1,46 +1,46 @@
 [color]
-    diff   = true
-    grep   = true
-    status = true
-    ui     = true
+	diff   = true
+	grep   = true
+	status = true
+	ui     = true
 
 [log]
-    decorate = true
+	decorate = true
 
 [push]
-    default = simple
+	default = simple
 
 [alias]
-    ci  = commit
-    cia = commit --amend
-    cis  = commit -S
-    cias = commit --amend -S
-    br  = branch
-    co  = checkout
-    st  = status --short
-    au  = add -u
-    cb  = checkout -b
-    rh  = reset --hard
-    pr  = pull --rebase
-    dc  = diff --cached
+	ci  = commit
+	cia = commit --amend
+	cis  = commit -S
+	cias = commit --amend -S
+	br  = branch
+	co  = checkout
+	st  = status --short
+	au  = add -u
+	cb  = checkout -b
+	rh  = reset --hard
+	pr  = pull --rebase
+	dc  = diff --cached
 
-    slog = log --show-signature
-    tree = log --graph --pretty=oneline --abbrev-commit
+	slog = log --show-signature
+	tree = log --graph --pretty=oneline --abbrev-commit
 
-    pour = merge --no-ff
-    sq   = merge --squash
+	pour = merge --no-ff
+	sq   = merge --squash
 
-    sync = "!git pull upstream master && git push origin master"
+	sync = "!git pull upstream master && git push origin master"
 
 [core]
-    pager  = less -+$LESS -FRX
-    editor = vim
+	pager  = less -+$LESS -FRX
+	editor = vim
 	quotePath = false
 
 [user]
-    name  = Ian P Badtrousers
-    email = badt@aletheia.icu
-    signingkey = F31F7F1D7626152BA1FA52C9D2F335802C30EBD1
+	name  = Ian P Badtrousers
+	email = badt@aletheia.icu
+	signingkey = F31F7F1D7626152BA1FA52C9D2F335802C30EBD1
 
 [gpg]
 	program = /usr/local/bin/gpg
@@ -49,37 +49,37 @@
 	helper =
 
 [url "https://git.sr.ht/"]
-    insteadOf = hut:
+	insteadOf = hut:
 [url "git@git.sr.ht:"]
-    pushInsteadOf = hut:
+	pushInsteadOf = hut:
 [url "http://anongit.kde.org/"]
-    insteadOf = kde:
+	insteadOf = kde:
 [url "git@git.kde.org:"]
-    pushInsteadOf = kde:
+	pushInsteadOf = kde:
 
 [url "https://github.com/"]
-    insteadOf = gh:
+	insteadOf = gh:
 [url "git@github.com:"]
-    pushInsteadOf = gh:
+	pushInsteadOf = gh:
 
 [url "git@gitlab.com:"]
-    insteadOf = gl:
+	insteadOf = gl:
 [url "git@gitlab.com:"]
-    pushInsteadOf = gl:
+	pushInsteadOf = gl:
 
 [url "git@github.com:"]
-    insteadOf = ggh:
+	insteadOf = ggh:
 [url "git@github.com:"]
-    pushInsteadOf = ggh:
+	pushInsteadOf = ggh:
 
 [url "git@circus:"]
-    insteadOf = circus:
+	insteadOf = circus:
 [url "git@circus:"]
-    pushInsteadOf = circus:
+	pushInsteadOf = circus:
 
 [filter "lfs"]
-    clean = git-lfs clean %f
-    smudge = git-lfs smudge %f
-    required = true
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
 [init]
 	defaultBranch = master

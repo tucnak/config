@@ -24,6 +24,7 @@ bison
 boost
 brotli
 c-ares
+ca-certificates
 cairo
 cairomm
 cairomm@1.14
@@ -33,8 +34,10 @@ cayley
 ccache
 ceres-solver
 check
+cjson
 cloog
 cmake
+cmocka
 cockroach
 cocoapods
 coreutils
@@ -105,7 +108,6 @@ gnu-tar
 gnupg
 gnuplot
 gnutls
-go
 gobject-introspection
 gperf
 graphicsmagick
@@ -124,6 +126,7 @@ heroku
 hicolor-icon-theme
 htop
 hugo
+hunspell
 hwloc
 icu4c
 ilmbase
@@ -138,6 +141,7 @@ jasper
 jbig2dec
 jemalloc
 jpeg
+jpeg-xl
 jsoncpp
 jsonpp
 jupyter
@@ -181,6 +185,7 @@ liblqr
 libmagic
 libmicrohttpd
 libmpc
+libnghttp2
 libnotify
 libogg
 libolm
@@ -192,6 +197,7 @@ libpng
 libproxy
 libpsl
 libpthread-stubs
+librist
 librsvg
 libsamplerate
 libscrypt
@@ -214,6 +220,7 @@ libusb
 libusbmuxd
 libuv
 libvidstab
+libvmaf
 libvo-aacenc
 libvorbis
 libvpx
@@ -244,12 +251,14 @@ lzo
 m4
 mad
 make
+mbedtls
+md4c
 mercurial
 metis
-minetest
 mpdecimal
 mpfr
 msgpack
+mysql
 ncurses
 neovim
 netcdf
@@ -277,6 +286,7 @@ openldap
 opensearch
 openssh
 openssl@1.1
+openssl@3
 openvpn
 optipng
 opus
@@ -289,6 +299,7 @@ pangomm
 pangomm@2.46
 pcre
 pcre2
+pdftohtml
 perl
 pidgin
 pinentry
@@ -308,6 +319,7 @@ pugixml
 pyqt
 pyqt@5
 python@2
+python@3.10
 python@3.8
 python@3.9
 qemu
@@ -364,6 +376,8 @@ tesseract
 texi2html
 texinfo
 theora
+timescaledb
+timescaledb-tools
 tinygo
 tmux
 tor
