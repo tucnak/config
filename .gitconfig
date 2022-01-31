@@ -23,6 +23,8 @@
 	rh  = reset --hard
 	pr  = pull --rebase
 	dc  = diff --cached
+	dt  = difftool
+	dtc = difftool --cached
 
 	slog = log --show-signature
 	tree = log --graph --pretty=oneline --abbrev-commit
@@ -83,3 +85,7 @@
 	required = true
 [init]
 	defaultBranch = master
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false

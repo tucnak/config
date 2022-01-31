@@ -13,6 +13,9 @@ alias ls      "ls -GFh"
 alias tree    "tree -N"
 
 gpgconf --launch gpg-agent
+echo | gpg-connect-agent
+set -xg GPG_TTY (tty)
+set -xg SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 
 set -xg GOPATH $HOME/go
 set -xg GOROOT /usr/local/go
@@ -70,16 +73,18 @@ function fish_mode_prompt
 end
 
 function fish_prompt
+	set pwd (string split / (pwd))
 	set_color --bold red
-	printf "%s@%s " $USER (hostname)
+	printf "%s@%s" $USER (hostname)
 
 	if test -n "$MNTROOM"
 		set_color --bold white
-		printf "<%s> " $MNTROOM
+		printf " <%s>" $MNTROOM
 	end
 
 	set_color normal
-	printf "\$ "
+	# printf "%s \$ " $pwd[-1]
+	printf " \$ "
 end
 
 function fish_right_prompt

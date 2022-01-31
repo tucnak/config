@@ -1,5 +1,5 @@
-"set lines=40 columns=75
-set noruler
+set lines=40 columns=75
+set ruler
 set guifont=Roboto\ Mono:h12
 set linebreak
 set noshowmode
