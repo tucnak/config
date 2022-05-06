@@ -69,8 +69,7 @@ hi Type cterm=bold
 hi Statement cterm=bold
 
 call plug#begin()
-Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['autoindent'] " slow
+Plug 'ojroques/vim-oscyank'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'voldikss/vim-floaterm'
@@ -89,6 +88,10 @@ Plug 'killphi/vim-ebnf'
 Plug 'tommcdo/vim-exchange'
 Plug 'mattn/emmet-vim'
 Plug 'evanleck/vim-svelte'
+Plug 'pangloss/vim-javascript'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " open url workaround
@@ -107,23 +110,19 @@ endfunction
 set foldtext=Foldtext()
 
 let mapleader = ","
+imap <silent> <C-e> <C-o>:call emmet#expandAbbr(3,"")<CR>
 nmap <leader>, :w<CR>
 imap <leader>, <ESC>:w<CR>a
-nmap <leader>, :w<CR>
 nmap <leader><Tab> :Buffers<CR>
 nmap <leader>m :Marks<CR>
 nmap <leader>f :Files<CR>
 nmap <leader>gf :GFiles<CR>
 nmap <leader>rg :Rg<Space>
 nmap <leader>v :vert<Space>
-nmap <silent> <leader>i :set modifiable<CR>
-nmap <silent> <leader>p :set paste<CR>
-nmap <silent> <leader>np :set nopaste<CR>
-nmap <silent> <leader>x :bp<bar>sp<bar>bn<bar>bd!<CR>
-"imap <leader><Tab> <C-x><C-o>
-imap <silent> <leader>/ <ESC>:call emmet#expandAbbr(3,"")<CR>i
-imap <leader>yo ё
-imap <leader>Yo Ё
+nmap <silent> <S-Tab> <C-o>
+nmap <silent> <leader>nu :set invnumber<CR>
+nmap <silent> ZX :bp<bar>sp<bar>bn<bar>bw!<CR>
+nmap <silent> <leader>/ :set invpaste<CR>
 nmap <silent> U :redo<CR>
 nmap <silent> Г :redo<CR>
 vmap <silent> tt :s/\t/    /<CR>:noh<CR>
@@ -133,31 +132,37 @@ nmap <silent> <Enter> :set invhlsearch<CR>
 nmap <silent> [a [b
 nmap <silent> ]d ]b
 
-" remove trailing spaces
-au BufWinEnter * set laststatus=0
-au BufWritePre * :%s/\s\+$//e
-" reload .vimrc on save
-au BufWritePost .vimrc nmap <buffer> <leader>, :w<CR>:source %<CR>
-
-command! Goimports exec ":silent !goimports -w ." | exec ":e"
-au FileType go nmap <buffer> <leader>, :w<CR>:Goimports<CR>
-au FileType go nmap <buffer> gop :!probe<Space>
-au FileType go nmap <buffer> gos :!speed<Space>
-"au FileType svelte setlocal indentexpr=HtmlIndent()
-au FileType c,cpp,java setlocal commentstring=//\ %s
-au FileType sql setlocal commentstring=--\ %s
-" tab policy
-au FileType vim,javascript,python setlocal sw=2 ts=2
-au FileType go setlocal sw=4 ts=4
-
-imap <expr> <leader><Tab> coc#refresh()
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gR <Plug>(coc-rename)
+nmap <silent> ff <Plug>(coc-format-selected)
 nmap <silent> ]c :CocNext<CR>
 nmap <silent> [c :CocPrev<CR>
+nmap <silent> <leader>cr :CocRestart<CR>
+
+nmap <silent> t :FloatermToggle<CR>
+nmap <silent> T :FloatermNew<CR>
+nmap <silent> ]t :FloatermNext<CR>
+nmap <silent> [t :FloatermPrev<CR>
+tmap <silent> ]t <C-\><C-n>:FloatermNext<CR>i
+tmap <silent> [t <C-\><C-n>:FloatermPrev<CR>i
+tmap <silent> ,, <C-\><C-n>
+
+" remove trailing spaces
+au BufWritePre * :%s/\s\+$//e
+" reload .vimrc on save
+au FileType vim nmap <buffer> <leader>, :w<CR>:source %<CR>
+"au FileType svelte setlocal indentexpr=HtmlIndent()
+au FileType c,cpp,java setlocal commentstring=//\ %s
+au FileType sql setlocal commentstring=--\ %s
+" tab policy
+au FileType vim,javascript,python setlocal sw=2 ts=2
+au FileType go,html,markdown setlocal sw=4 ts=4
+au FileType sql setlocal expandtab
+au FileType html setlocal foldmethod=indent
+au FileType go nmap <buffer> <leader>. :w<CR>:!goimports -w %<CR><CR>
 
 " multi-line navigation
 nnoremap j gj
@@ -181,19 +186,32 @@ nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-l> :wincmd l<CR>
 
-" copilot
+nmap <silent> gp "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
+nmap <silent> gP "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>P
+vmap <silent> gp "=substitute(@1, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
+command! Regwipe for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+nmap <leader>y <Plug>OSCYank
+nmap <leader>Y V:OSCYank<CR>
+vnoremap <leader>y :OSCYank<CR>
+nmap <leader>cc :Copilot enable<CR>
+nmap <leader>cx :Copilot disable<CR>
+imap <silent> <leader><Tab> <Plug>(copilot-next)
+imap <silent> <leader><S-Tab> <Plug>(copilot-previous)
+
 let g:copilot_filetypes = {
-  \ '*': v:false,
-  \ 'python': v:true,
-  \ 'go': v:true,
-  \ }
+      \ '*': v:false,
+      \ 'python': v:true,
+      \ 'go': v:false,
+      \ }
+let g:go_fmt_autosave = 1
+let g:go_def_mapping_enabled = 0
+let g:go_code_completion_enabled = 0
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat_require_pragma = 0
 
 " floating terminal
 let g:floaterm_title=''
-nmap <silent> <leader>` :FloatermToggle<CR>
-imap <silent> <leader>` <ESC>:FloatermToggle<CR>
-tmap <silent> <leader>` <C-\><C-n>:FloatermToggle<CR>
-tmap <leader>, <C-\><C-n>
 
 " word count, read time
 nmap <silent> <leader>wc :call Readtime()<CR>
