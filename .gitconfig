@@ -40,52 +40,36 @@
 	quotePath = false
 
 [user]
-	name  = Ian P Badtrousers
-	email = badt@aletheia.icu
-	signingkey = F31F7F1D7626152BA1FA52C9D2F335802C30EBD1
+	name  = Ilya Kowalewski
+	email = ilya@hrest.org
+	signingkey = B26D0E615F3ACB767913C5BAFF6A1713507CD7A5
 
 [gpg]
 	program = /usr/local/bin/gpg
 
 [credential]
 	helper =
-
-[url "https://git.sr.ht/"]
-	insteadOf = hut:
-[url "git@git.sr.ht:"]
-	pushInsteadOf = hut:
-[url "http://anongit.kde.org/"]
-	insteadOf = kde:
-[url "git@git.kde.org:"]
-	pushInsteadOf = kde:
-
-[url "https://github.com/"]
-	insteadOf = gh:
-[url "git@github.com:"]
-	pushInsteadOf = gh:
-
-[url "git@gitlab.com:"]
-	insteadOf = gl:
-[url "git@gitlab.com:"]
-	pushInsteadOf = gl:
-
-[url "git@github.com:"]
-	insteadOf = ggh:
-[url "git@github.com:"]
-	pushInsteadOf = ggh:
-
-[url "git@circus:"]
-	insteadOf = circus:
-[url "git@circus:"]
-	pushInsteadOf = circus:
-
-[filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
 [init]
 	defaultBranch = master
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
+
+[url "git@git.sr.ht:~"]
+	insteadOf = hut:
+	pushInsteadOf = hut:
+[url "git@gitlab.com:"]
+	insteadOf = gl:
+	pushInsteadOf = gl:
+[url "git@github.com:"]
+	insteadOf = gh:
+	pushInsteadOf = gh:
+[url "git@github.com:coingaming/"]
+	insteadOf = yolo:
+	pushInsteadOf = yolo:
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

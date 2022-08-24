@@ -1,9 +1,10 @@
-colorscheme default
+	" TODO: do not forget to update accordingly
+set shell=/opt/homebrew/bin/fish
+
 syntax enable
 packadd matchit
 filetype plugin indent on
-
-nnoremap <f10> :echo synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")<CR>
+colorscheme default
 
 set autoindent
 set backspace=indent,eol,start
@@ -34,9 +35,8 @@ set noshowcmd
 set noshowmode
 set noswapfile
 set nowritebackup
-set nu
+set nonu
 set preserveindent
-set shell=/usr/local/bin/fish
 set shiftwidth=4
 set showbreak=
 set showmatch
@@ -55,116 +55,180 @@ set virtualedit=onemore
 set wrap
 set wrapmargin=0
 
-hi Folded guibg=NONE ctermbg=NONE
-hi FoldColumn guibg=NONE ctermbg=NONE
-hi SignColumn guibg=NONE ctermbg=NONE
-hi CocFadeOut guibg=lightred ctermbg=red
+	" wipes the registers clean in secure files
+command! Wipe for i in range(34,122) |
+	\ silent! call setreg(nr2char(i), []) |
+	\ endfor
+au FileType gpg au BufUnload <buffer> Wipe
 
-hi Normal guibg=#ffffeb
+	" load .vimrc and .gvimrc
+command! Rc source ~/.vimrc | source ~/.gvimrc
 
-hi Comment guifg=darkgray
-hi Identifier guifg=black
-hi Constant cterm=italic gui=italic guifg=brown
-hi Type cterm=bold
-hi Statement cterm=bold
+	" remove trailing spaces
+au BufWritePre * :%s/\s\+$//e
+	" reload .vimrc on save
+au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
+au FileType c,cpp,java setl commentstring=//\ %s
+au FileType sql setl commentstring=--\ %s
+	" tab policy
+au FileType svelte,typescript,javascript setl sw=2 ts=2 noet
+au FileType vim,python setl sw=2 ts=2
+au FileType go,html,markdown setl sw=4 ts=4 noet
+au FileType sql setl et
 
 call plug#begin()
+	" foundation
+Plug 'jamessan/vim-gnupg'
 Plug 'ojroques/vim-oscyank'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'voldikss/vim-floaterm'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wellle/targets.vim'
+
+	" language servervs
+Plug 'josa42/coc-go'
+Plug 'neoclide/coc-tsserver'
+Plug 'coc-extensions/coc-svelte'
+Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+
+	" not language servers
+Plug 'fatih/vim-go'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
+Plug 'elixir-editors/vim-elixir'
+
+	" we. like. tpope
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sleuth'
-Plug 'tucnak/vim-playfount'
-Plug 'killphi/vim-ebnf'
-Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-dadbod'
+	" i used to have 'tpope/vim-commentary' but as of now
+	" wish to consider better mixed
+	" filetype support
+Plug 'tomtom/tcomment_vim'
+Plug 'wellle/targets.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'voldikss/vim-floaterm'
 Plug 'mattn/emmet-vim'
-Plug 'evanleck/vim-svelte'
-Plug 'pangloss/vim-javascript'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'jessfraz/openai.vim'
+
+"Plug 'hut:badt/vim-banderol'
 call plug#end()
 
-" open url workaround
-nmap <silent> gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
+	" in terminal i want blue, in gui- i want yellow
+hi Normal guibg=#f0f7ff
+hi Comment guifg=darkgray
+hi Identifier guifg=black
+hi Constant term=italic gui=italic
+hi Type term=bold
+hi Statement term=bold
+	" floats don't look good... why? who knows
+hi CocFadeOut guibg=lightred ctermbg=red
+hi FgCocInfoSignBgCocFloating ctermfg=9 ctermbg=13 guifg=#15aabf guibg=LightMagenta
+hi FgCocErrorSignBgCocFloating ctermfg=9 ctermbg=13 guifg=white guibg=LightMagenta
+hi FgCocWarningSignBgCocFloating ctermfg=9 ctermbg=13 guifg=#15aabf guibg=LightMagenta
+hi clear Folded
+hi clear FoldColumn
+hi clear SignColumn
+	" reveal highlight group under the cursor
+nmap <leader>§ :echo synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")<CR>
 
-" location list
-nnoremap <silent> [f :lprevious<CR>
-nnoremap <silent> ]f :lnext<CR>
+	" floating autocomplete pop
+fun! CheckBackspace() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endf
+inoremap <silent><expr> <TAB>
+	\ coc#pum#visible() ? coc#pum#next(1):
+	\ CheckBackspace() ? "\<Tab>" :
+	\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-function! Foldtext()
-  " let nl = v:foldend - v:foldstart + 1
-  let head = substitute(getline(v:foldstart), "^[\t ]*", "", 1)
-  let prefix = repeat(' ', indent(v:foldstart))
-  return prefix . head
-endfunction
+	" universally good looking fold labels
+fun! Foldtext()
+	let head = substitute(getline(v:foldstart), "^[\t ]*", "", 1)
+	let prefix = repeat(' ', indent(v:foldstart))
+	return prefix . head
+endf
 set foldtext=Foldtext()
 
+	" print word count, approx. read time
+fun! Readtime()
+	let l:wc = wordcount()
+	let l:chars = l:wc['chars']
+	let l:words = l:wc['words']
+	try
+		exe "silent normal! g\<C-g>"
+		echo printf('%d chars, %d words, %d pages, %.0fmin readtime',
+		  	  \ l:chars, l:words,
+		  \ 1 + l:words / 250,
+		  \ ceil(l:words / 200.0))
+	endtry
+endfun
+nmap <silent> <leader>wc :call Readtime()<CR>
+
+	" who doesn't like a comma?
 let mapleader = ","
-imap <silent> <C-e> <C-o>:call emmet#expandAbbr(3,"")<CR>
+nmap <leader>v :vert<Space>
 nmap <leader>, :w<CR>
-imap <leader>, <ESC>:w<CR>a
-nmap <leader><Tab> :Buffers<CR>
+imap <leader>, <Cmd>:w<CR>
+nmap <silent> ZX :bp<bar>sp<bar>bn<bar>bw!<CR>
+nmap <silent> gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
+nmap <silent> <S-TAB> <C-o>
+imap <silent> <C-e> <C-o>:call emmet#expandAbbr(3,"")<CR>
+	" paste whole lines without the surrounding whitespace
+nmap <silent> gp "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
+nmap <silent> gP "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>P
+vmap <silent> gp "=substitute(@1, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
+	" copy into the terminal sequence buffer (copy in tmux)
+nmap <leader>y <Plug>OSCYank
+nmap <leader>Y V:OSCYank<CR>
+vmap <leader>y :OSCYank<CR>
+	" fzf
+nmap <leader><TAB> :Buffers<CR>
 nmap <leader>m :Marks<CR>
 nmap <leader>f :Files<CR>
-nmap <leader>gf :GFiles<CR>
-nmap <leader>rg :Rg<Space>
-nmap <leader>v :vert<Space>
-nmap <silent> <S-Tab> <C-o>
+nmap <leader>F :GFiles<CR>
+nmap <leader><space> :Rg<space>
+nmap <leader>/ :History/<CR>
 nmap <silent> <leader>nu :set invnumber<CR>
-nmap <silent> ZX :bp<bar>sp<bar>bn<bar>bw!<CR>
-nmap <silent> <leader>/ :set invpaste<CR>
+nmap <silent> <leader>\ :set invpaste<CR>
 nmap <silent> U :redo<CR>
 nmap <silent> Г :redo<CR>
 vmap <silent> tt :s/\t/    /<CR>:noh<CR>
 vmap <silent> TT :s/    /\t/<CR>:noh<CR>
 nmap <silent> <Enter> :set invhlsearch<CR>
-" experimental idea
-nmap <silent> [a [b
-nmap <silent> ]d ]b
-
+	" language server binds
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD <Plug>(coc-declaration)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gR <Plug>(coc-rename)
+nmap <silent> g® <Plug>(coc-refactor)
 nmap <silent> ff <Plug>(coc-format-selected)
+vmap <silent> ff <Plug>(coc-format-selected)
 nmap <silent> ]c :CocNext<CR>
 nmap <silent> [c :CocPrev<CR>
-nmap <silent> <leader>cr :CocRestart<CR>
-
-nmap <silent> t :FloatermToggle<CR>
-nmap <silent> T :FloatermNew<CR>
-nmap <silent> ]t :FloatermNext<CR>
-nmap <silent> [t :FloatermPrev<CR>
-tmap <silent> ]t <C-\><C-n>:FloatermNext<CR>i
-tmap <silent> [t <C-\><C-n>:FloatermPrev<CR>i
+nmap <silent> <leader>cR :CocRestart<CR>
+nmap <silent> <leader>cc :CocCommand<CR>
+	" hotkey terminal
+nmap <silent> <leader>t :FloatermToggle<CR>
+nmap <silent> <leader>T :FloatermNew<CR>
+nmap <silent> ,. <Cmd>FloatermToggle<CR>
+tmap <silent> ]t <Cmd>FloatermNext<CR>
+tmap <silent> [t <Cmd>FloatermPrev<CR>
 tmap <silent> ,, <C-\><C-n>
+tmap <silent> ,. <Cmd>FloatermToggle<CR>
 
-" remove trailing spaces
-au BufWritePre * :%s/\s\+$//e
-" reload .vimrc on save
-au FileType vim nmap <buffer> <leader>, :w<CR>:source %<CR>
-"au FileType svelte setlocal indentexpr=HtmlIndent()
-au FileType c,cpp,java setlocal commentstring=//\ %s
-au FileType sql setlocal commentstring=--\ %s
-" tab policy
-au FileType vim,javascript,python setlocal sw=2 ts=2
-au FileType go,html,markdown setlocal sw=4 ts=4
-au FileType sql setlocal expandtab
-au FileType html setlocal foldmethod=indent
-au FileType go nmap <buffer> <leader>. :w<CR>:!goimports -w %<CR><CR>
-
-" multi-line navigation
+	" multi-line navigation
 nnoremap j gj
 nnoremap gj j
 nnoremap k gk
@@ -181,49 +245,18 @@ vnoremap <silent> <Left> h
 vnoremap <silent> <Down> j
 vnoremap <silent> <Up> k
 vnoremap <silent> <Right> l
-nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-j> :wincmd j<CR>
-nmap <silent> <C-k> :wincmd k<CR>
-nmap <silent> <C-l> :wincmd l<CR>
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
 
-nmap <silent> gp "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
-nmap <silent> gP "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>P
-vmap <silent> gp "=substitute(@1, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
-command! Regwipe for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
-nmap <leader>y <Plug>OSCYank
-nmap <leader>Y V:OSCYank<CR>
-vnoremap <leader>y :OSCYank<CR>
-nmap <leader>cc :Copilot enable<CR>
-nmap <leader>cx :Copilot disable<CR>
-imap <silent> <leader><Tab> <Plug>(copilot-next)
-imap <silent> <leader><S-Tab> <Plug>(copilot-previous)
-
-let g:copilot_filetypes = {
-      \ '*': v:false,
-      \ 'python': v:true,
-      \ 'go': v:false,
-      \ }
+let g:floaterm_title = ''
+	" vim-go overrides
 let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
 let g:go_def_mapping_enabled = 0
 let g:go_code_completion_enabled = 0
-let g:prettier#quickfix_enabled = 0
+	" typescript formatting
+let g:prettier#quickfix_enabled = 1
 let g:prettier#autoformat_require_pragma = 0
-
-" floating terminal
-let g:floaterm_title=''
-
-" word count, read time
-nmap <silent> <leader>wc :call Readtime()<CR>
-fun! Readtime()
-  let l:wc = wordcount()
-  let l:chars = l:wc['chars']
-  let l:words = l:wc['words']
-  try
-    exe "silent normal! g\<C-g>"
-    echo printf('%d chars, %d words, %d pages, %.0fmin readtime',
-      	  \ l:chars, l:words,
-		  \ 1 + l:words / 250,
-		  \ ceil(l:words / 200.0))
-  endtry
-endfun
+let g:svelte_indent_style = 0

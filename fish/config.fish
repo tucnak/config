@@ -8,27 +8,15 @@ else
     end
 end
 
+alias pose "docker compose"
 alias termbin "nc termbin.com 9999"
 alias ls      "ls -GFh"
 alias tree    "tree -N"
 
-gpgconf --launch gpg-agent
-echo | gpg-connect-agent
+set -xg GOPATH $HOME/go
+set -xg PATH /bin /usr/local/bin /usr/bin $HOME/bin $GOPATH/bin
 set -xg GPG_TTY (tty)
 set -xg SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-
-set -xg GOPATH $HOME/go
-set -xg GOROOT /usr/local/go
-set -xg PATH /bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /sbin $HOME/bin $GOROOT/bin $GOPATH/bin $HOME/.cargo/bin
-
-set -xg LIBRARY_PATH /usr/local/lib /usr/local/opt/openssl/lib
-set -xg CPLUS_INCLUDE_PATH /usr/local/include /usr/local/opt/ccache/libexec
-set -xg PKG_CONFIG_PATH /lib/pkgconfig /usr/local/lib/pkgconfig /usr/local/opt/libarchive/lib/pkgconfig
-set -xg CC "clang"
-set -xg CXX "clang++"
-set -xg LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/openblas/lib -L/usr/local/opt/sqlite/lib"
-set -xg CPPFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/openblas/include -I/usr/local/opt/sqlite/include"
-set -xg CCACHE_CPP2 YES
 set -xg LANG en_US.UTF-8
 set -xg LC_CTYPE en_US.UTF-8
 set -xg LC_ALL en_US.UTF-8
@@ -36,18 +24,10 @@ set -xg CLICOLOR 1
 set -xg LSCOLORS ExFxCxDxBxegedabagacad
 set -xg HOMEBREW_NO_AUTO_UPDATE 1
 
-if test -e $HOME/.config/fish/private.fish
-	source $HOME/.config/fish/private.fish
-end
+gpgconf --launch gpg-agent
+
 if test -e $HOME/.config/fish/iterm2.fish
 	source $HOME/.config/fish/iterm2.fish
-end
-source $HOME/dev/gcloud/path.fish.inc
-
-function sshtmux
-	set details $argv[1]
-	set mode $argv[2]
-	ssh -C $details -t "tmux -CC $mode"
 end
 
 function outpost
@@ -63,7 +43,7 @@ function config
 		vim $HOME/.config/fish/$argv[1].fish
 		return
 	end
-	vim $HOME/.config/fish/config.fish
+	mvim $HOME/.config/fish/config.fish
 end
 
 function fish_greeting
@@ -73,18 +53,10 @@ function fish_mode_prompt
 end
 
 function fish_prompt
-	set pwd (string split / (pwd))
+	#set pwd (string split / (pwd))
 	set_color --bold red
-	printf "%s@%s" $USER (hostname)
-
-	if test -n "$MNTROOM"
-		set_color --bold white
-		printf " <%s>" $MNTROOM
-	end
-
+	printf "%s\$ " (prompt_pwd)
 	set_color normal
-	# printf "%s \$ " $pwd[-1]
-	printf " \$ "
 end
 
 function fish_right_prompt
