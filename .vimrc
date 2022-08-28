@@ -7,23 +7,21 @@ filetype plugin indent on
 colorscheme default
 
 set autoindent
-set backspace=indent,eol,start
 set colorcolumn=0
 set completeopt=longest,noinsert,menuone,noselect
 set exrc
 set fileencoding=utf8
-set fillchars=vert:\ ,fold:-,diff:-
+set fillchars=vert:\ ,fold:-,foldopen:-,foldclose:+,diff:-
 set foldcolumn=5
 set foldlevel=5
 set foldmethod=syntax
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 set hidden
-set hlsearch
+set nohlsearch
 set ignorecase
 set incsearch
 set keywordprg=":help"
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня.хъ;abcdefghijklmnopqrstuvwxyz.[]
-set lazyredraw
 set linebreak
 set mouse=a
 set nobackup
@@ -37,8 +35,7 @@ set noswapfile
 set nowritebackup
 set nonu
 set preserveindent
-set shiftwidth=4
-set showbreak=
+set showbreak=....
 set showmatch
 set smartcase
 set smartindent
@@ -46,7 +43,6 @@ set smarttab
 set splitbelow
 set splitright
 set t_Co=256
-set tabstop=4
 set termguicolors
 set textwidth=0
 set timeoutlen=500
@@ -59,22 +55,10 @@ set wrapmargin=0
 command! Wipe for i in range(34,122) |
 	\ silent! call setreg(nr2char(i), []) |
 	\ endfor
-au FileType gpg au BufUnload <buffer> Wipe
+au BufUnload *.gpg Wipe
 
 	" load .vimrc and .gvimrc
 command! Rc source ~/.vimrc | source ~/.gvimrc
-
-	" remove trailing spaces
-au BufWritePre * :%s/\s\+$//e
-	" reload .vimrc on save
-au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
-au FileType c,cpp,java setl commentstring=//\ %s
-au FileType sql setl commentstring=--\ %s
-	" tab policy
-au FileType svelte,typescript,javascript setl sw=2 ts=2 noet
-au FileType vim,python setl sw=2 ts=2
-au FileType go,html,markdown setl sw=4 ts=4 noet
-au FileType sql setl et
 
 call plug#begin()
 	" foundation
@@ -118,6 +102,7 @@ Plug 'mattn/emmet-vim'
 Plug 'jessfraz/openai.vim'
 
 "Plug 'hut:badt/vim-banderol'
+Plug 'tucnak/vim-playfount'
 call plug#end()
 
 	" in terminal i want blue, in gui- i want yellow
@@ -143,13 +128,13 @@ fun! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endf
-inoremap <silent><expr> <TAB>
-	\ coc#pum#visible() ? coc#pum#next(1):
-	\ CheckBackspace() ? "\<Tab>" :
-	\ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <TAB>
+" 	\ coc#pum#visible() ? coc#pum#next(1):
+" 	\ CheckBackspace() ? "\<Tab>" :
+" 	\ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	" universally good looking fold labels
 fun! Foldtext()
@@ -175,18 +160,22 @@ endfun
 nmap <silent> <leader>wc :call Readtime()<CR>
 
 	" who doesn't like a comma?
-let mapleader = ","
 nmap <leader>v :vert<Space>
 nmap <leader>, :w<CR>
 imap <leader>, <Cmd>:w<CR>
 nmap <silent> ZX :bp<bar>sp<bar>bn<bar>bw!<CR>
 nmap <silent> gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
+nmap <silent> <TAB> <C-i>
 nmap <silent> <S-TAB> <C-o>
 imap <silent> <C-e> <C-o>:call emmet#expandAbbr(3,"")<CR>
 	" paste whole lines without the surrounding whitespace
 nmap <silent> gp "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
 nmap <silent> gP "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>P
 vmap <silent> gp "=substitute(@1, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
+
+let mapleader = ","
+nmap <silent> <leader>cc :<C-u>execute 'setl cc=' . v:count<CR>
+nmap <silent> <leader>tw :<C-u>execute 'setl tw=' . v:count<CR>
 	" copy into the terminal sequence buffer (copy in tmux)
 nmap <leader>y <Plug>OSCYank
 nmap <leader>Y V:OSCYank<CR>
@@ -196,7 +185,7 @@ nmap <leader><TAB> :Buffers<CR>
 nmap <leader>m :Marks<CR>
 nmap <leader>f :Files<CR>
 nmap <leader>F :GFiles<CR>
-nmap <leader><space> :Rg<space>
+nmap <leader><Space> :Rg<space>
 nmap <leader>/ :History/<CR>
 nmap <silent> <leader>nu :set invnumber<CR>
 nmap <silent> <leader>\ :set invpaste<CR>
@@ -217,8 +206,8 @@ nmap <silent> ff <Plug>(coc-format-selected)
 vmap <silent> ff <Plug>(coc-format-selected)
 nmap <silent> ]c :CocNext<CR>
 nmap <silent> [c :CocPrev<CR>
-nmap <silent> <leader>cR :CocRestart<CR>
-nmap <silent> <leader>cc :CocCommand<CR>
+nmap <silent> <leader>cocR :CocRestart<CR>
+nmap <silent> <leader>cocc :CocCommand<CR>
 	" hotkey terminal
 nmap <silent> <leader>t :FloatermToggle<CR>
 nmap <silent> <leader>T :FloatermNew<CR>
@@ -260,3 +249,22 @@ let g:go_code_completion_enabled = 0
 let g:prettier#quickfix_enabled = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:svelte_indent_style = 0
+let g:sleuth_play_heuristics = 0
+
+	" remove trailing spaces
+au BufWritePre * :%s/\s\+$//e
+	" reload .vimrc on save
+au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
+au FileType c,cpp,java setl commentstring=//\ %s
+au FileType sql setl commentstring=--\ %s
+	" tab policy
+au FileType svelte,typescript,javascript setl sw=2 ts=2 noet
+au FileType vim,python setl sw=2 ts=2
+au FileType go,html,markdown setl sw=4 ts=4 noet
+au FileType sql  setl et
+au FileType play setl noet sw=8 ts=16 tw=80
+au FileType play imap ,, <C-o>gqip
+au FileType play imap <ForceClick> <C-o>vip
+au FileType play nmap <ForceClick> vip
+au FileType play CocDisable
+au FileType play au BufNew,BufEnter <buffer> CocDisable
