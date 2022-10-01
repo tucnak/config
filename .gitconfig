@@ -11,32 +11,30 @@
 	default = simple
 
 [alias]
-	ci  = commit
-	cia = commit --amend
+	ci   = commit
+	cia  = commit --amend
 	cis  = commit -S
 	cias = commit --amend -S
-	br  = branch
-	co  = checkout
-	st  = status --short
-	au  = add -u
-	cb  = checkout -b
-	rh  = reset --hard
-	pr  = pull --rebase
-	dc  = diff --cached
-	dt  = difftool
-	dtc = difftool --cached
-
+	br   = branch
+	co   = checkout
+	cb   = checkout -b
+	au   = add -u
+	st   = status --short
+	rh   = reset --hard
+	pr   = pull --rebase
+	sync = pull --rebase upstream master
+	dc   = diff --cached
+	dt   = difftool
+	dtc  = difftool --cached
+	sub  = submodule
+	noff = merge --no-ff
+	sqsh = merge --squash
 	slog = log --show-signature
 	tree = log --graph --pretty=oneline --abbrev-commit
 
-	pour = merge --no-ff
-	sq   = merge --squash
-
-	sync = "!git pull upstream master && git push origin master"
-
 [core]
 	pager  = less -+$LESS -FRX
-	editor = vim
+	editor = mvim -f
 	quotePath = false
 
 [user]
@@ -57,8 +55,8 @@
 	prompt = false
 
 [url "git@git.sr.ht:~"]
-	insteadOf = hut:
-	pushInsteadOf = hut:
+	insteadOf = srht:
+	pushInsteadOf = srht:
 [url "git@gitlab.com:"]
 	insteadOf = gl:
 	pushInsteadOf = gl:

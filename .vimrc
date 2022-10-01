@@ -1,19 +1,20 @@
-	" TODO: do not forget to update accordingly
+	" TODO: may differ
 set shell=/opt/homebrew/bin/fish
-
 syntax enable
 packadd matchit
 filetype plugin indent on
 colorscheme default
 
+set conceallevel=2
 set autoindent
+set signcolumn=yes
 set colorcolumn=0
 set completeopt=longest,noinsert,menuone,noselect
 set exrc
 set fileencoding=utf8
-set fillchars=vert:\ ,fold:-,foldopen:-,foldclose:+,diff:-
-set foldcolumn=5
-set foldlevel=5
+set fillchars=eob:\ ,vert:\ ,fold:-,foldopen:-,foldclose:+,diff:-
+set foldcolumn=7
+set foldlevel=10
 set foldmethod=syntax
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 set hidden
@@ -35,7 +36,7 @@ set noswapfile
 set nowritebackup
 set nonu
 set preserveindent
-set showbreak=....
+set showbreak=
 set showmatch
 set smartcase
 set smartindent
@@ -43,7 +44,6 @@ set smarttab
 set splitbelow
 set splitright
 set t_Co=256
-set termguicolors
 set textwidth=0
 set timeoutlen=500
 set undolevels=1000
@@ -55,7 +55,6 @@ set wrapmargin=0
 command! Wipe for i in range(34,122) |
 	\ silent! call setreg(nr2char(i), []) |
 	\ endfor
-au BufUnload *.gpg Wipe
 
 	" load .vimrc and .gvimrc
 command! Rc source ~/.vimrc | source ~/.gvimrc
@@ -67,14 +66,23 @@ Plug 'ojroques/vim-oscyank'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tomtom/tcomment_vim'
+Plug 'wellle/targets.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'voldikss/vim-floaterm'
+Plug 'mattn/emmet-vim'
 
 	" language servervs
 Plug 'josa42/coc-go'
 Plug 'neoclide/coc-tsserver'
 Plug 'coc-extensions/coc-svelte'
 Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+Plug 'mhinz/vim-mix-format'
 
 	" not language servers
+Plug 'rizzatti/dash.vim'
+Plug 'nickeb96/fish.vim'
 Plug 'fatih/vim-go'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
@@ -90,19 +98,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-dadbod'
-	" i used to have 'tpope/vim-commentary' but as of now
-	" wish to consider better mixed
-	" filetype support
-Plug 'tomtom/tcomment_vim'
-Plug 'wellle/targets.vim'
-Plug 'justinmk/vim-sneak'
-Plug 'kristijanhusak/vim-dadbod-ui'
-Plug 'voldikss/vim-floaterm'
-Plug 'mattn/emmet-vim'
-Plug 'jessfraz/openai.vim'
 
-"Plug 'hut:badt/vim-banderol'
-Plug 'tucnak/vim-playfount'
 call plug#end()
 
 	" in terminal i want blue, in gui- i want yellow
@@ -112,40 +108,34 @@ hi Identifier guifg=black
 hi Constant term=italic gui=italic
 hi Type term=bold
 hi Statement term=bold
-	" floats don't look good... why? who knows
-hi CocFadeOut guibg=lightred ctermbg=red
-hi FgCocInfoSignBgCocFloating ctermfg=9 ctermbg=13 guifg=#15aabf guibg=LightMagenta
-hi FgCocErrorSignBgCocFloating ctermfg=9 ctermbg=13 guifg=white guibg=LightMagenta
-hi FgCocWarningSignBgCocFloating ctermfg=9 ctermbg=13 guifg=#15aabf guibg=LightMagenta
+hi SignColumn ctermbg=NONE guibg=NONE
 hi clear Folded
 hi clear FoldColumn
-hi clear SignColumn
-	" reveal highlight group under the cursor
-nmap <leader>§ :echo synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")<CR>
 
 	" floating autocomplete pop
-fun! CheckBackspace() abort
+fun! TabOrNot() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endf
-" inoremap <silent><expr> <TAB>
-" 	\ coc#pum#visible() ? coc#pum#next(1):
-" 	\ CheckBackspace() ? "\<Tab>" :
-" 	\ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <TAB>
+ 	\ coc#pum#visible() ? coc#pum#next(1):
+ 	\ TabOrNot() ? "\<Tab>" :
+ 	\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ?
+			\ coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	" universally good looking fold labels
-fun! Foldtext()
+fun! s:foldtext()
 	let head = substitute(getline(v:foldstart), "^[\t ]*", "", 1)
 	let prefix = repeat(' ', indent(v:foldstart))
 	return prefix . head
 endf
-set foldtext=Foldtext()
+set foldtext=s:foldtext()
 
 	" print word count, approx. read time
-fun! Readtime()
+fun! s:readtime()
 	let l:wc = wordcount()
 	let l:chars = l:wc['chars']
 	let l:words = l:wc['words']
@@ -156,10 +146,25 @@ fun! Readtime()
 		  \ 1 + l:words / 250,
 		  \ ceil(l:words / 200.0))
 	endtry
-endfun
-nmap <silent> <leader>wc :call Readtime()<CR>
+endf
+nmap <silent> <leader>wc :call <SID>readtime()<CR>
+
+fun! s:autochdir()
+	if &buftype ==# 'terminal'
+		set noautochdir
+		return
+	endif
+	if &autochdir
+		set noautochdir
+	else
+		set autochdir
+	endif
+	echom getcwd() . ' (' . &autochdir . ')'
+endf
+nmap <silent> <leader>~ :call <SID>autochdir()<CR>
 
 	" who doesn't like a comma?
+let mapleader = ","
 nmap <leader>v :vert<Space>
 nmap <leader>, :w<CR>
 imap <leader>, <Cmd>:w<CR>
@@ -172,10 +177,8 @@ imap <silent> <C-e> <C-o>:call emmet#expandAbbr(3,"")<CR>
 nmap <silent> gp "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
 nmap <silent> gP "=substitute(@@, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>P
 vmap <silent> gp "=substitute(@1, '\(^[ \t]*\)\\|\n*', '', 'g')<CR>p
-
-let mapleader = ","
-nmap <silent> <leader>cc :<C-u>execute 'setl cc=' . v:count<CR>
-nmap <silent> <leader>tw :<C-u>execute 'setl tw=' . v:count<CR>
+	" reveal highlight group under the cursor
+nmap <leader>§ :echo synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")<CR>
 	" copy into the terminal sequence buffer (copy in tmux)
 nmap <leader>y <Plug>OSCYank
 nmap <leader>Y V:OSCYank<CR>
@@ -204,10 +207,12 @@ nmap <silent> gR <Plug>(coc-rename)
 nmap <silent> g® <Plug>(coc-refactor)
 nmap <silent> ff <Plug>(coc-format-selected)
 vmap <silent> ff <Plug>(coc-format-selected)
-nmap <silent> ]c :CocNext<CR>
-nmap <silent> [c :CocPrev<CR>
 nmap <silent> <leader>cocR :CocRestart<CR>
 nmap <silent> <leader>cocc :CocCommand<CR>
+nmap <silent> ]c :CocNext<CR>
+nmap <silent> [c :CocPrev<CR>
+nmap <silent> []q :call setqflist([])<CR>:cclose<CR>
+nmap <silent> []l :call setloclist([])<CR>:lclose<CR>
 	" hotkey terminal
 nmap <silent> <leader>t :FloatermToggle<CR>
 nmap <silent> <leader>T :FloatermNew<CR>
@@ -216,7 +221,6 @@ tmap <silent> ]t <Cmd>FloatermNext<CR>
 tmap <silent> [t <Cmd>FloatermPrev<CR>
 tmap <silent> ,, <C-\><C-n>
 tmap <silent> ,. <Cmd>FloatermToggle<CR>
-
 	" multi-line navigation
 nnoremap j gj
 nnoremap gj j
@@ -239,32 +243,65 @@ nnoremap <silent> <C-j> :wincmd j<CR>
 nnoremap <silent> <C-k> :wincmd k<CR>
 nnoremap <silent> <C-l> :wincmd l<CR>
 
+	" colour column
+nmap <silent> <leader>cc :<C-u>execute 'setl cc=' . v:count<CR>
+	" text width
+nmap <silent> <leader>tw :<C-u>execute 'setl tw=' . v:count<CR>
+	" shift width
+nmap <silent> <leader>sw :<C-u>execute 'setl sw=' . v:count<CR>
+	" tab stop
+nmap <silent> <leader>ts :<C-u>execute 'setl ts=' . v:count<CR>
+	" fold column
+nmap <silent> <leader>fc :<C-u>execute 'setl foldcolumn=' . v:count<CR>
+	" fold level
+nmap <silent> <leader>fl :<C-u>execute 'setl foldlevel=' . v:count<CR>
+	" status line (0-2)
+nmap <silent> <leader>ls :<C-u>execute 'set laststatus=' . v:count<CR>
+
+fun! Man(...)
+	if &ft == 'elixir'
+		Dash
+		return
+	en
+	if &ft == 'go'
+		GoDocBrowser
+		return
+	en
+endf
+	" external docs
+nmap <silent> <leader>K :call Man()<CR>
+
 let g:floaterm_title = ''
-	" vim-go overrides
+	" go
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
 let g:go_def_mapping_enabled = 0
 let g:go_code_completion_enabled = 0
-	" typescript formatting
+	" typescript
 let g:prettier#quickfix_enabled = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:svelte_indent_style = 0
 let g:sleuth_play_heuristics = 0
 
-	" remove trailing spaces
-au BufWritePre * :%s/\s\+$//e
-	" reload .vimrc on save
-au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
-au FileType c,cpp,java setl commentstring=//\ %s
-au FileType sql setl commentstring=--\ %s
-	" tab policy
-au FileType svelte,typescript,javascript setl sw=2 ts=2 noet
-au FileType vim,python setl sw=2 ts=2
-au FileType go,html,markdown setl sw=4 ts=4 noet
-au FileType sql  setl et
-au FileType play setl noet sw=8 ts=16 tw=80
-au FileType play imap ,, <C-o>gqip
-au FileType play imap <ForceClick> <C-o>vip
-au FileType play nmap <ForceClick> vip
-au FileType play CocDisable
-au FileType play au BufNew,BufEnter <buffer> CocDisable
+augroup oncevimrc
+		" wipe the registers on close
+	au BufUnload *.gpg Wipe
+		" remove trailing spaces
+	au BufWritePre * :%s/\s\+$//e
+		" reload .vimrc on save
+	au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
+	au FileType c,cpp,java setl commentstring=//\ %s
+	au FileType sql setl commentstring=--\ %s
+		" tab policy
+	au FileType svelte,typescript,javascript setl sw=2 ts=2 noet
+	au FileType vim,python setl sw=2 ts=2
+	au FileType go,html,markdown setl sw=4 ts=4 noet
+	au FileType sql  setl et
+		" playfount
+	au FileType play setl noet sw=8 ts=16 tw=80
+	au FileType play imap <silent> ,, <esc>m0gqip`0a
+	au FileType play imap <ForceClick> <C-o>vip
+	au FileType play nmap <ForceClick> vip
+	au FileType play CocDisable
+	au FileType play au BufNew,BufEnter <buffer> CocDisable
+augroup END
