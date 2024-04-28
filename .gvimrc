@@ -1,36 +1,43 @@
 set termguicolors
 hi clear VertSplit
+au FileType gpt hi clear Error
 hi Normal guibg=#ffffeb
 hi Constant guifg=darkgreen gui=italic
 hi ColorColumn guibg=#fafae1
-hi Comment guifg=purple
+hi Comment guifg=chocolate4
 hi StatusLine guibg=#ffffff guifg=Brown
 hi StatusLineNC guibg=#ffffff guifg=Brown
 
-set guifont=Fira\ Code:h12
+set guifont=IBM\ Plex\ Mono:h14
 	" change font on demand
-nmap <silent> <leader>pt :<C-u>execute 'set guifont=Fira\ Code:h' . v:count<CR>
+nmap <silent> <leader>h :<C-u>execute 'set guifont=IBM\ Plex\ Mono:h' . v:count<CR>
 	" macvim keyboard i18n support
 set langmap=
 set noimd
 set imsearch=2
 	" remove scroll bars
-set guioptions=egmTk
+set guioptions=egmk
 	" else
 set ruler
 set linebreak
 set noshowmode
-set nosplitscroll
+set splitkeep=topline
 set laststatus=0
+set smoothscroll
 
+nnoremap <D-5> :source %<CR>
 	" karabiner binds these to back/forth mouse buttons
-nmap <F1> <C-o>
-nmap <F2> <C-i>
+nmap <F13> <C-o>
+nmap <F14> <C-i>
 	" macvim touch pad binds for quickfix and jumplist
+nmap <silent> <C-S-n> :bnext<CR>
+nmap <silent> <C-S-p> :bprev<CR>
 nmap <silent> <SwipeUp> :cnext<CR>
 nmap <silent> <SwipeDown> :cprev<CR>
 nmap <silent> <SwipeLeft> <C-o>
 nmap <silent> <SwipeRight> <C-i>
+nmap <silent> <MiddleMouse> :call Man()<CR>
+imap <silent> <MiddleMouse> <Cmd>:call Man()<CR>
 nmap <silent> <ForceClick> :call Man()<CR>
 imap <silent> <ForceClick> <Cmd>:call Man()<CR>
 
@@ -48,8 +55,10 @@ fun! Scale(...)
 	let &columns = k-1 + k*(&foldcolumn + width + 2)
 endf
 nmap <leader>1 :call Scale(20, 80)<CR>
-nmap <leader>2 :call Scale(50, 80)<CR>
+nmap <leader>2 :call Scale(48, 80)<CR>
 nmap <leader>3 :call Scale(20, 80, 2)<CR>
-nmap <leader>4 :call Scale(50, 80, 2)<CR>
-nmap <leader>5 :call Scale(50, 60, 3)<CR>
+nmap <leader>4 :call Scale(48, 80, 2)<CR>
+nmap <leader>5 :call Scale(48, 60, 3)<CR>
 nmap <leader>6 :call Scale(80, 60, 3)<CR>
+
+call Scale(20, 80)

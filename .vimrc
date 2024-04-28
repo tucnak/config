@@ -6,7 +6,7 @@ filetype plugin indent on
 colorscheme default
 
 set conceallevel=2
-set autoindent
+set noautoindent
 set signcolumn=yes
 set colorcolumn=0
 set completeopt=longest,noinsert,menuone,noselect
@@ -62,12 +62,12 @@ command! Rc source ~/.vimrc | source ~/.gvimrc
 call plug#begin()
 	" foundation
 Plug 'jamessan/vim-gnupg'
-Plug 'ojroques/vim-oscyank'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tomtom/tcomment_vim'
 Plug 'wellle/targets.vim'
+Plug 'kana/vim-textobj-user'
 Plug 'justinmk/vim-sneak'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'voldikss/vim-floaterm'
@@ -81,6 +81,7 @@ Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 Plug 'mhinz/vim-mix-format'
 
 	" not language servers
+Plug 'github/copilot.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'nickeb96/fish.vim'
 Plug 'fatih/vim-go'
@@ -88,6 +89,8 @@ Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'elixir-editors/vim-elixir'
+Plug 'ap/vim-css-color'
+Plug 'jasonlong/vim-textobj-css'
 
 	" we. like. tpope
 Plug 'tpope/vim-sensible'
@@ -98,6 +101,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-dadbod'
+
+	" internal
+Plug 'git@github.com:tucnak/vim-playfount'
+Plug 'tucnak/vim-gpt'
 
 call plug#end()
 
@@ -117,11 +124,11 @@ fun! TabOrNot() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endf
-inoremap <silent><expr> <TAB>
+inoremap <silent><expr> <Tab>
  	\ coc#pum#visible() ? coc#pum#next(1):
  	\ TabOrNot() ? "\<Tab>" :
  	\ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <expr><S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <CR> coc#pum#visible() ?
 			\ coc#pum#confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -166,8 +173,8 @@ nmap <silent> <leader>~ :call <SID>autochdir()<CR>
 	" who doesn't like a comma?
 let mapleader = ","
 nmap <leader>v :vert<Space>
-nmap <leader>, :w<CR>
-imap <leader>, <Cmd>:w<CR>
+"nmap <leader>, :w<CR>
+"imap <leader>, <Cmd>:w<CR>
 nmap <silent> ZX :bp<bar>sp<bar>bn<bar>bw!<CR>
 nmap <silent> gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 nmap <silent> <TAB> <C-i>
@@ -184,12 +191,14 @@ nmap <leader>y <Plug>OSCYank
 nmap <leader>Y V:OSCYank<CR>
 vmap <leader>y :OSCYank<CR>
 	" fzf
-nmap <leader><TAB> :Buffers<CR>
+nmap <leader><Tab> :Buffers<CR>
 nmap <leader>m :Marks<CR>
 nmap <leader>f :Files<CR>
 nmap <leader>F :GFiles<CR>
+nmap <leader>ƒ :GFiles?<CR>
 nmap <leader><Space> :Rg<space>
-nmap <leader>/ :History/<CR>
+" nmap <leader><CR> :Rg <C-R><C-W><CR>
+" nmap <leader>/ :History/<CR>
 nmap <silent> <leader>nu :set invnumber<CR>
 nmap <silent> <leader>\ :set invpaste<CR>
 nmap <silent> U :redo<CR>
@@ -252,9 +261,9 @@ nmap <silent> <leader>sw :<C-u>execute 'setl sw=' . v:count<CR>
 	" tab stop
 nmap <silent> <leader>ts :<C-u>execute 'setl ts=' . v:count<CR>
 	" fold column
-nmap <silent> <leader>fc :<C-u>execute 'setl foldcolumn=' . v:count<CR>
+nmap <silent> <leader>cf :<C-u>execute 'setl foldcolumn=' . v:count<CR>
 	" fold level
-nmap <silent> <leader>fl :<C-u>execute 'setl foldlevel=' . v:count<CR>
+nmap <silent> <leader>lf :<C-u>execute 'setl foldlevel=' . v:count<CR>
 	" status line (0-2)
 nmap <silent> <leader>ls :<C-u>execute 'set laststatus=' . v:count<CR>
 
@@ -271,6 +280,22 @@ endf
 	" external docs
 nmap <silent> <leader>K :call Man()<CR>
 
+let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.7 } }
+let g:fzf_preview_window = ['right,70%,<70(up,50%)', 'ctrl-/']
 let g:floaterm_title = ''
 	" go
 let g:go_fmt_autosave = 1
@@ -282,6 +307,24 @@ let g:prettier#quickfix_enabled = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:svelte_indent_style = 0
 let g:sleuth_play_heuristics = 0
+	" copilot
+inoremap <silent><script><expr> <PageUp> copilot#Previous()
+inoremap <silent><script><expr> <PageDown> copilot#Next()
+inoremap <silent><script><expr> <Home> copilot#Accept("\<CR>")
+inoremap <silent><script><expr> <End> copilot#Dismiss()
+
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+
+let g:copilot_no_tab_map = v:true
+let g:copilot_filetypes = {
+	\ '*': v:false,
+	\ 'python': v:true,
+	\ 'go': v:true,
+	\ 'elixir': v:true,
+	\ 'javascript': v:true,
+	\ 'typescript': v:true,
+	\ 'vim': v:true,
+	\ }
 
 augroup oncevimrc
 		" wipe the registers on close
@@ -289,7 +332,7 @@ augroup oncevimrc
 		" remove trailing spaces
 	au BufWritePre * :%s/\s\+$//e
 		" reload .vimrc on save
-	au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
+	"au FileType vim nmap <buffer> <leader>, :w<CR>:Rc<CR>
 	au FileType c,cpp,java setl commentstring=//\ %s
 	au FileType sql setl commentstring=--\ %s
 		" tab policy
@@ -305,3 +348,36 @@ augroup oncevimrc
 	au FileType play CocDisable
 	au FileType play au BufNew,BufEnter <buffer> CocDisable
 augroup END
+
+augroup gpt_binds
+	au FileType gpt nnoremap <buffer><silent> <Home> <Cmd>GptDefault<CR>
+	au FileType gpt nnoremap <buffer><silent> <End> <Cmd>GptDialog<CR>
+	au FileType gpt imap <buffer><silent> <Home> <Esc><Home>
+	au FileType gpt imap <buffer><silent> <End> <Esc><End>
+	au FileType gpt nmap <buffer><silent> <leader>p <Home>
+	au FileType gpt nmap <buffer><silent> <leader>P <End>
+augroup END
+
+let g:markdown_fenced_languages = [
+		\ 'go',
+		\ 'python',
+		\ 'javascript',
+		\ 'typescript',
+		\ 'sql',
+		\ 'cpp',
+		\ 'elixir',
+		\ 'vim' ]
+let g:gpt_default_register = 'p'
+let g:gpt_default_model = '4'
+let g:gpt_default_opts = '0'
+nnoremap <leader><leader> <Cmd>Gpt<CR>
+inoremap <leader><leader> <Esc>:Gpt<CR>
+
+nnoremap <S-Up> <Cmd>leftabove sp<CR>
+nnoremap <S-Down> <Cmd>sp<CR>
+nnoremap <S-Left> <Cmd>leftabove vsp<CR>
+nnoremap <S-Right> <Cmd>vsp<CR>
+inoremap <S-Up> <Esc>:leftabove sp<CR>
+inoremap <S-Down> <Esc>:sp<CR>
+inoremap <S-Left> <Esc>:leftabove vsp<CR>
+inoremap <S-Right> <Esc>:vsp<CR>
